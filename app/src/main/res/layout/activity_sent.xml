@@ -5,14 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pagewithlogo"
-    tools:context=".MainActivity">
-
+    tools:context=".SentActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textSent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I want to show FutureMe..."
+        android:text="Your video is scheduled to send!"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.159" />
+
+    <TextView
+        android:id="@+id/textThankYou"
+        android:layout_width="220dp"
+        android:layout_height="56dp"
+        android:text="Thank you for using Dear FutureMe."
+        android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,44 +33,31 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintVertical_bias="0.514" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="228dp"
-        android:layout_height="96dp"
-        android:text=" a love letter...\nhow shitty life is right now...\nsomething i’m excited about!\nmy dreams and aspirations..."
+        android:id="@+id/textEmail"
+        android:layout_width="267dp"
+        android:layout_height="68dp"
+        android:layout_marginBottom="248dp"
+        android:text="We have sent you a confirmation email. If you would like to unschedule your send, click on Unsend in your email."
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.063" />
+        app:layout_constraintVertical_bias="0.035" />
 
     <Button
-        android:id="@+id/start"
+        android:id="@+id/backToHome"
         android:layout_width="247dp"
         android:layout_height="48dp"
-        android:layout_marginTop="116dp"
-        android:text="Send a Video to the Future"
-        android:textSize="10sp"
-        android:onClick="start"
+        android:layout_marginBottom="160dp"
+        android:text="Back To Home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="57dp"
-        android:layout_height="17dp"
-        android:layout_marginTop="64dp"
-        android:text="email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.124"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintVertical_bias="0.442" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
