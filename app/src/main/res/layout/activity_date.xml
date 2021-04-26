@@ -38,6 +38,7 @@
         android:layout_marginTop="116dp"
         android:layout_marginBottom="96dp"
         android:text="Next: Message"
+        android:onClick="next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +47,7 @@
 
     <Button
         android:id="@+id/backToVideo"
+        android:onClick="back"
         android:layout_width="247dp"
         android:layout_height="48dp"
         android:layout_marginTop="116dp"
