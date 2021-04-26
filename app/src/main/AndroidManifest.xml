@@ -3,12 +3,9 @@
     package="com.example.finalprojectgroup3">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <uses-feature android:name="android.hardware.type.watch" />
     <uses-feature
         android:name="android.hardware.camera2"
         android:required="true" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,36 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProjectGroup3">
-        <activity android:name=".SentActivity"></activity>
+        <activity android:name=".SentActivity"/>
         <activity android:name=".VideoActivity" />
         <activity android:name=".ConfirmationActivity" />
-        <activity
-            android:name=".MessageActivity"
-            android:label="@string/title_activity_message">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <uses-library
-            android:name="com.google.android.wearable"
-            android:required="true" />
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
-        <meta-data
-            android:name="com.google.android.wearable.standalone"
-            android:value="true" />
-
+        <activity android:name=".MessageActivity"/>
         <activity android:name=".DateActivity" />
         <activity android:name=".UploadActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
