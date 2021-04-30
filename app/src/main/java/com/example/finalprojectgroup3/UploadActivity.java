@@ -4,18 +4,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.VideoView;
 
 public class UploadActivity extends AppCompatActivity {
 
-    static final int REQUEST_VIDEO_CAPTURE = 1;
-    static final int MEDIA_PICKER_SELECT = 2;
+    static final int REQUEST_VIDEO_CAPTURE = 1; // For recording
+    static final int MEDIA_PICKER_SELECT = 2; // For uploading
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,8 @@ public class UploadActivity extends AppCompatActivity {
 
         Button record_button = findViewById(R.id.record);
         Button upload_button = findViewById(R.id.upload);
-        record_button.setOnClickListener(v -> {
+
+        record_button.setOnClickListener(v -> { // For recording
             Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
             if(intent.resolveActivity(getPackageManager()) != null){
@@ -35,7 +38,7 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
-        upload_button.setOnClickListener(new View.OnClickListener() {
+        upload_button.setOnClickListener(new View.OnClickListener() { // For uploading
             @Override
             public void onClick(View v) {
                 //Pick an item from the data, returning what was selected.
@@ -53,27 +56,23 @@ public class UploadActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         if(resultCode == RESULT_OK){
-            if(requestCode == REQUEST_VIDEO_CAPTURE){
+            if(requestCode == REQUEST_VIDEO_CAPTURE){ // From recording a video
 
-                VideoView videoView = new VideoView(this);
-                videoView.setVideoURI(data.getData());
-
-                videoView.start();
-                builder.setView(videoView).show();
-
+                Intent intent = new Intent(UploadActivity.this, VideoActivity.class);
+                intent.putExtra("VIDEO_URI", data.getData().toString());
+                startActivity(intent);
             }
-            if(requestCode == MEDIA_PICKER_SELECT){
+            if(requestCode == MEDIA_PICKER_SELECT){ // From selecting a video
                 Uri selectedMediaUri = data.getData();
                 if(selectedMediaUri.toString().contains("video")){
-                    //handle video
-                    VideoView videoView = new VideoView(this);
-                    videoView.setVideoURI(data.getData());
 
-                    videoView.start();
-                    builder.setView(videoView).show();
+                    Intent intent = new Intent(UploadActivity.this, VideoActivity.class);
+                    intent.putExtra("VIDEO_URI", data.getData().toString());
+
+                    startActivity(intent);
                 }
             }
         }
