@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "884754210337",
+    "project_id": "dear-futureme",
+    "storage_bucket": "dear-futureme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884754210337:android:97a076d9a4250705d54d60",
+        "android_client_info": {
+          "package_name": "com.example.finalprojectgroup3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884754210337-9l5b3kvsb52jun88b5v7j6b5vgjqf9qm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.finalprojectgroup3",
+            "certificate_hash": "81bad34a9f7cb890aed59741e3be1186f83f2ecc"
+          }
+        },
+        {
+          "client_id": "884754210337-dkhmpdskq8rho8oojec928n773hg822g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk37Vc7C0LVKqCExz3vTO5t4kik1c4xPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884754210337-dkhmpdskq8rho8oojec928n773hg822g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
