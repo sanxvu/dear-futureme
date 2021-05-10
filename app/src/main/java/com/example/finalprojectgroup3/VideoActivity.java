@@ -32,14 +32,9 @@ public class VideoActivity extends AppCompatActivity {
         videoView.setMediaController(controller);
         videoView.setVideoURI(videoUri);
 
-
-
         videoView.setOnPreparedListener(mp ->{
-
             videoView.start();
         });
-
-
     }
 
     public void next(View view) {
