@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 public class SentActivity extends AppCompatActivity {
 
     @Override
@@ -20,4 +23,7 @@ public class SentActivity extends AppCompatActivity {
             startActivity(call);
         }
     }
+
+
+
 }

@@ -10,9 +10,19 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 public class VideoActivity extends AppCompatActivity {
+
+    // instance for firebase storage and StorageReference
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,24 @@ public class VideoActivity extends AppCompatActivity {
         videoView.setOnPreparedListener(mp ->{
             videoView.start();
         });
+
+        // get the Firebase  storage reference
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        StorageReference childRef = storageReference.child("video/"+videoUri.getLastPathSegment());
+        UploadTask uploadTask = childRef.putFile(videoUri);
+
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.i("TAG", "SUCCESS UPLOAD TO FIREBASE");
+                Toast.makeText(VideoActivity.this,
+                                "Video Uploaded!!",
+                                Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     public void next(View view) {
