@@ -11,10 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -66,17 +68,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateUI(currentUser);
     }
 
-    public void start(View view) {
-        if (view.getId() == R.id.start) {
-            Intent call = new Intent(this, UploadActivity.class);
-            startActivity(call);
-        }
-    }
-
     private void updateUI(@Nullable FirebaseUser account) {
         if (account != null) {
             Toast.makeText(getApplicationContext(), "Signed in!!", Toast.LENGTH_LONG).show();
             Log.d(TAG, "SIGNED IN!!");
+            Intent call = new Intent(this, UploadActivity.class);
+            startActivity(call);
             // need to update this with a TextView or something
         } else {
             Toast.makeText(getApplicationContext(), "Signed out!!", Toast.LENGTH_LONG).show();
@@ -87,13 +84,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -107,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.w(TAG, "Google sign in failed", e);
             }
         }
+
     }
 
     // After a user successfully signs in, get an ID token from the GoogleSignInAccount
@@ -131,16 +127,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
     }
-    
+
 
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.signInButton:
-                signIn();
-                break;
+        signIn();
+//        switch (v.getId()) {
+//            case R.id.signInButton:
+//                signIn();
+//                break;
 //            case R.id.sign_out_button:
 //                signOut();
 //                break;
-        }
+//      }
     }
 }
