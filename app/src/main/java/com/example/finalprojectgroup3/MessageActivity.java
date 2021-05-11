@@ -5,13 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MessageActivity extends AppCompatActivity {
+
+    private static EditText message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+        message = (EditText) findViewById(R.id.messageText);
+    }
+
+    public static String getMessage() {
+        return "Message:\n" + message.getText().toString();
     }
 
     public void next(View view) {
