@@ -24,6 +24,4 @@ public class SentActivity extends AppCompatActivity {
         }
     }
 
-
-
 }

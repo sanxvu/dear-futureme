@@ -56,19 +56,17 @@
 
     <Button
         android:id="@+id/timeButton"
-        android:onClick="onClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_date"
-        android:layout_alignStart="@+id/btn_date"
-        android:layout_alignLeft="@+id/btn_date"
+        android:layout_alignStart="@id/dateButton"
+        android:layout_alignLeft="@id/in_time"
+        android:onClick="onClick"
         android:text="SELECT TIME"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.038"
         app:layout_constraintStart_toEndOf="@+id/in_time"
         app:layout_constraintTop_toBottomOf="@+id/dateButton"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.039" />
 
     <TextView
         android:id="@+id/textView"
