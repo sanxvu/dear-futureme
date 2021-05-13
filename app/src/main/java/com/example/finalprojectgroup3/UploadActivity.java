@@ -46,7 +46,7 @@ public class UploadActivity extends AppCompatActivity {
             if(intent.resolveActivity(getPackageManager()) != null){
                 //Set limitation to the duration of the video. 2nd param is limit in SECONDS
                 //no limit, delete line below
-                intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10);
+                intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 60);
                 startActivityForResult(intent, REQUEST_VIDEO_CAPTURE);
             }
         });
