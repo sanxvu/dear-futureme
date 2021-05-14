@@ -8,10 +8,10 @@
     tools:context=".ConfirmationActivity">
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="326dp"
-        android:layout_height="69dp"
-        android:text="Confirmation"
+        android:id="@+id/textView"
+        android:layout_width="335dp"
+        android:layout_height="36dp"
+        android:text="Let's double check..."
         android:textAlignment="center"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -22,28 +22,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.11" />
 
-    <ScrollView
-        android:layout_width="326dp"
-        android:layout_height="492dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
 
     <Button
-        android:id="@+id/send"
+        android:id="@+id/finish"
         android:layout_width="247dp"
         android:layout_height="48dp"
         android:layout_marginTop="116dp"
         android:layout_marginBottom="96dp"
-        android:text="Send"
-        android:onClick="send"
+        android:text="All Set!"
+        android:onClick="finish"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +38,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/backToMessage"
+        android:id="@+id/backToDate"
         android:layout_width="247dp"
         android:layout_height="48dp"
         android:layout_marginTop="116dp"
@@ -64,5 +51,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/confirmation"
+        android:layout_width="323dp"
+        android:layout_height="384dp"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.513" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
