@@ -47,26 +47,50 @@
         app:layout_constraintTop_toBottomOf="@+id/testing_videoView"
         app:layout_constraintVertical_bias="0.162" />
 
-    <TextView
-        android:id="@+id/userMessage_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prev_button" />
-
     <Button
         android:id="@+id/readMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="From PastMe..."
+        android:onClick="onClickMessagePopup"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/testing_videoView"
         app:layout_constraintVertical_bias="0.038" />
+
+    <TextView
+        android:id="@+id/noVideo_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="304dp"
+        android:text="No videos to unearth! Please upload a video"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/noVideo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="52dp"
+        android:text="Return to home"
+        android:onClick="homeFromUnearth"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noVideo_textView" />
+
+    <Button
+        android:id="@+id/unearth_home_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="52dp"
+        android:text="Return to home"
+        android:onClick="homeFromUnearth"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

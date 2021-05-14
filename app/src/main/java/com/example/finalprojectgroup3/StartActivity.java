@@ -33,6 +33,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     private SignInButton signInButton;
     private FirebaseAuth mAuth;
 
+    boolean isNewUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +71,12 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         if (account != null) {
             Toast.makeText(getApplicationContext(), "Signed in!!", Toast.LENGTH_LONG).show();
             Log.d(TAG, "SIGNED IN!!");
+
             Intent call = new Intent(this, HomeActivity.class);
+            call.putExtra("isNewUser", isNewUser);
+            call.putExtra("intentSource", "StartActivity");
+            Log.i("isNewUser", String.valueOf(isNewUser));
+
             startActivity(call);
             // need to update this with a TextView or something
         } else {
@@ -94,6 +101,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
+
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
@@ -115,7 +123,11 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            isNewUser = task.getResult().getAdditionalUserInfo().isNewUser();
+
                             updateUI(user);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -125,16 +137,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
-
     public void onClick(View v) {
         signIn();
-//        switch (v.getId()) {
-//            case R.id.signInButton:
-//                signIn();
-//                break;
-//            case R.id.sign_out_button:
-//                signOut();
-//                break;
-//      }
     }
 }
