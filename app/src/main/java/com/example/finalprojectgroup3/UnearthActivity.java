@@ -63,7 +63,7 @@ public class UnearthActivity extends AppCompatActivity {
         userVideosURI = (ArrayList<Uri>) getIntent().getSerializableExtra("arrList");
 
         if(userVideosURI.size() == 0){ // NO VIDEO TO DISPLAY!!!!! PROMPT USER TO GO BACK
-            videoView.setVisibility(View.INVISIBLE); // dont show the video view
+            videoView.setVisibility(View.INVISIBLE); // don't show the video view
             nextButton.setVisibility(View.INVISIBLE); // dont show next button
             prevButton.setVisibility(View.INVISIBLE); // dont show prev button
 
