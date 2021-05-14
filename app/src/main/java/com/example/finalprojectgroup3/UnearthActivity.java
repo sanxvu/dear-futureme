@@ -42,7 +42,7 @@ public class UnearthActivity extends AppCompatActivity {
     int counter = 0;
 
     DatabaseReference mDatabase;
-    String userEmail;
+    String userEmail; // Need to get user email for the database
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,20 +58,21 @@ public class UnearthActivity extends AppCompatActivity {
         videoView = findViewById(R.id.testing_videoView);
         nextButton = findViewById(R.id.next_button);
         prevButton = findViewById(R.id.prev_button);
-        prevButton.setVisibility(View.INVISIBLE); // start with first vid, no back button
+        prevButton.setEnabled(false); // start with first vid, no back button
 
         userVideosURI = (ArrayList<Uri>) getIntent().getSerializableExtra("arrList");
 
         if(userVideosURI.size() == 0){ // NO VIDEO TO DISPLAY!!!!! PROMPT USER TO GO BACK
-            videoView.setVisibility(View.INVISIBLE);
-            nextButton.setVisibility(View.INVISIBLE);
+            videoView.setVisibility(View.INVISIBLE); // dont show the video view
+            nextButton.setVisibility(View.INVISIBLE); // dont show next button
+            prevButton.setVisibility(View.INVISIBLE); // dont show prev button
 
-            noVideo_text.setVisibility(View.VISIBLE);
+            noVideo_text.setVisibility(View.VISIBLE); // show the go back buttons and text
             noVideo_Button.setVisibility(View.VISIBLE);
 
         } else { // At least 1 video to display
             if(userVideosURI.size() == 1){ // If the user only has 1 vid, must not show next button
-                nextButton.setVisibility(View.INVISIBLE);
+                nextButton.setEnabled(false); // no video to show next
             }
 
             controller = new MediaController(this);
@@ -118,12 +119,12 @@ public class UnearthActivity extends AppCompatActivity {
     public void videoDiaryNext(View v){
         counter++;
         if(counter == userVideosURI.size() - 1){
-            nextButton.setVisibility(View.INVISIBLE);
+            nextButton.setEnabled(false);
         }
         else if(counter < userVideosURI.size() - 1){
-            nextButton.setVisibility(View.VISIBLE);
+            nextButton.setEnabled(true);
         }
-        prevButton.setVisibility(View.VISIBLE);
+        prevButton.setEnabled(true);
         displayVideo(counter);
 
     }
@@ -131,12 +132,12 @@ public class UnearthActivity extends AppCompatActivity {
     public void videoDiaryPrev(View v){
         counter--;
         if(counter == 0){
-            prevButton.setVisibility(View.INVISIBLE);
+            prevButton.setEnabled(false);;
         }
         else if(counter > 0){
-            prevButton.setVisibility(View.VISIBLE);
+            prevButton.setEnabled(true);;
         }
-        nextButton.setVisibility(View.VISIBLE);
+        nextButton.setEnabled(true);
         displayVideo(counter);
     }
 
