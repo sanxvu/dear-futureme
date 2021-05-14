@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/nudebg"
-    tools:context=".SentActivity">
+    tools:context=".FinishActivity">
 
     <TextView
         android:id="@+id/textSent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your video is scheduled to send!"
+        android:text="Your video is buried!"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,7 +40,7 @@
         android:layout_width="267dp"
         android:layout_height="68dp"
         android:layout_marginBottom="208dp"
-        android:text="We have sent you a confirmation email. If you would like to unschedule your send, click on Unsend in your email."
+        android:text="..."
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

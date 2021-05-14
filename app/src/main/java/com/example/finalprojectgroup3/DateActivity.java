@@ -78,14 +78,14 @@ public class DateActivity extends AppCompatActivity {
     }
 
     public void next(View view) {
-        if (view.getId() == R.id.nextToMessage) {
-            Intent call = new Intent(this,MessageActivity.class);
+        if (view.getId() == R.id.nextToConfirmation) {
+            Intent call = new Intent(this,ConfirmationActivity.class);
             startActivity(call);
         }
     }
     public void back(View view) {
-        if (view.getId() == R.id.backToVideo) {
-            Intent call = new Intent(this,VideoActivity.class);
+        if (view.getId() == R.id.backToMessage) {
+            Intent call = new Intent(this,MessageActivity.class);
             startActivity(call);
         }
     }

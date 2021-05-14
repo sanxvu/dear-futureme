@@ -5,11 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 public class ConfirmationActivity extends AppCompatActivity {
 
     TextView confirmation;
@@ -22,15 +18,16 @@ public class ConfirmationActivity extends AppCompatActivity {
         confirmation.setText(DateActivity.getDate() + "\n" + MessageActivity.getMessage());
     }
 
-    public void send(View view) {
-        if (view.getId() == R.id.send) {
-            Intent call = new Intent(this,SentActivity.class);
+    public void finish(View view) {
+        if (view.getId() == R.id.finish) {
+            Intent call = new Intent(this,FinishActivity.class);
             startActivity(call);
         }
     }
+
     public void back(View view) {
-        if (view.getId() == R.id.backToMessage) {
-            Intent call = new Intent(this,MessageActivity.class);
+        if (view.getId() == R.id.backToDate) {
+            Intent call = new Intent(this,DateActivity.class);
             startActivity(call);
         }
     }

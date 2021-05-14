@@ -2,13 +2,11 @@ package com.example.finalprojectgroup3;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -16,14 +14,9 @@ import android.widget.VideoView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class VideoActivity extends AppCompatActivity {
 
@@ -91,15 +84,15 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     public void next(View view) {
-        if (view.getId() == R.id.nextToDate) {
+        if (view.getId() == R.id.nextToMessage) {
             Intent call = new Intent(this, MessageActivity.class);
             call.putExtra("VIDEO_URI", videoURL);
             startActivity(call);
         }
     }
     public void back(View view) {
-        if (view.getId() == R.id.backToUpload) {
-            Intent call = new Intent(this,UploadActivity.class);
+        if (view.getId() == R.id.backToHome) {
+            Intent call = new Intent(this, HomeActivity.class);
             startActivity(call);
         }
     }

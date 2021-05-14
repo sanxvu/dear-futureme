@@ -48,14 +48,14 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     public void next(View view) {
-        if (view.getId() == R.id.nextToConfirm) {
-            Intent call = new Intent(this,ConfirmationActivity.class);
+        if (view.getId() == R.id.nextToDate) {
+            Intent call = new Intent(this,DateActivity.class);
             startActivity(call);
         }
     }
     public void back(View view) {
-        if (view.getId() == R.id.backToDate) {
-            Intent call = new Intent(this,DateActivity.class);
+        if (view.getId() == R.id.backToVideo) {
+            Intent call = new Intent(this,VideoActivity.class);
             startActivity(call);
         }
     }

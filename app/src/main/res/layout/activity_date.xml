@@ -72,7 +72,7 @@
         android:id="@+id/textView"
         android:layout_width="326dp"
         android:layout_height="69dp"
-        android:text="Schedule a future date to send your video."
+        android:text="Hide this from FutureMe until..."
         android:textAlignment="center"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -81,15 +81,15 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintVertical_bias="0.102" />
 
     <Button
-        android:id="@+id/nextToMessage"
+        android:id="@+id/nextToConfirmation"
         android:layout_width="247dp"
         android:layout_height="48dp"
         android:layout_marginTop="116dp"
         android:layout_marginBottom="96dp"
-        android:text="Next: Message"
+        android:text="Let's double check..."
         android:onClick="next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +98,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/backToVideo"
+        android:id="@+id/backToMessage"
         android:onClick="back"
         android:layout_width="247dp"
         android:layout_height="48dp"

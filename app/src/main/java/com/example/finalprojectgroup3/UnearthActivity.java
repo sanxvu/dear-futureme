@@ -16,20 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
-import com.google.firebase.storage.StorageReference;
 
-import java.net.URI;
 import java.util.ArrayList;
 
-public class TestVideoDiary extends AppCompatActivity {
+public class UnearthActivity extends AppCompatActivity {
 
     VideoView videoView;
     MediaController controller;
@@ -46,7 +40,7 @@ public class TestVideoDiary extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test);
+        setContentView(R.layout.activity_unearth);
 
         videoView = findViewById(R.id.testing_videoView);
         nextButton = findViewById(R.id.next_button);
@@ -85,10 +79,6 @@ public class TestVideoDiary extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
     }
 
     public void videoDiaryNext(View v){

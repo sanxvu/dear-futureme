@@ -5,26 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/nudebg"
-    tools:context=".MainActivity">
+    tools:context=".StartActivity">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I want to show FutureMe..."
+        android:layout_width="221dp"
+        android:layout_height="50dp"
+        android:text="Your own personal video time capsule."
+        android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.518" />
+        app:layout_constraintVertical_bias="0.607" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="228dp"
-        android:layout_height="96dp"
-        android:text=" a love letter...\nhow shitty life is right now...\nsomething i’m excited about!\nmy dreams and aspirations..."
+        android:layout_width="226dp"
+        android:layout_height="117dp"
+        android:text="Bury as many videos and lock it inside a time capsule. Set a date to unlock it in the future... \n\nSJSU EMAIL ONLY"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -36,23 +38,24 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="357dp"
-        android:layout_height="443dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        android:layout_height="373dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.114"
         app:srcCompat="@drawable/logo" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"
-        android:layout_width="244dp"
-        android:layout_height="42dp"
+        android:layout_width="156dp"
+        android:layout_height="41dp"
         android:layout_marginBottom="144dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

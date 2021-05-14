@@ -11,7 +11,7 @@
         android:id="@+id/textView"
         android:layout_width="335dp"
         android:layout_height="36dp"
-        android:text="Confirmation"
+        android:text="Let's double check..."
         android:textAlignment="center"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -24,13 +24,13 @@
 
 
     <Button
-        android:id="@+id/send"
+        android:id="@+id/finish"
         android:layout_width="247dp"
         android:layout_height="48dp"
         android:layout_marginTop="116dp"
         android:layout_marginBottom="96dp"
-        android:text="Send"
-        android:onClick="send"
+        android:text="All Set!"
+        android:onClick="finish"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/backToMessage"
+        android:id="@+id/backToDate"
         android:layout_width="247dp"
         android:layout_height="48dp"
         android:layout_marginTop="116dp"
