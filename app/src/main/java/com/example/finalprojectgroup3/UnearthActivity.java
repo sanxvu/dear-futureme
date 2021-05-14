@@ -49,6 +49,8 @@ public class UnearthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unearth);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         noVideo_text = findViewById(R.id.noVideo_textView);
         noVideo_Button = findViewById(R.id.noVideo_button);
 
@@ -99,23 +101,18 @@ public class UnearthActivity extends AppCompatActivity {
         String key = userVideosURI.get(counter).getLastPathSegment().substring(userEmail.length()+1);
 
         mDatabase.child("messages").child(key).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Log.i("firebase", "GOT THE DATA");
-                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
-                builder.setTitle("Dear Future Me...");
-                builder.setMessage(task.getResult().getValue().toString());
+                if (task.isSuccessful()) {
+                    Log.i("firebase", "GOT THE DATA: " + task.getResult().getValue().toString());
 
-                builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                    AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+                    builder.setTitle("Dear Future Me...");
+                    builder.setMessage(task.getResult().getValue().toString());
+                    builder.setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
     }
 
     public void videoDiaryNext(View v){
