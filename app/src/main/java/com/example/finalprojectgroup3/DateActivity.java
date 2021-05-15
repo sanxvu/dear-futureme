@@ -30,7 +30,7 @@ public class DateActivity extends AppCompatActivity {
     Button btnTimePicker;
 
     Button back;
-    boolean isEditing = true;
+    boolean isEditing = false;
 
     EditText txtDate;
     EditText txtTime;
