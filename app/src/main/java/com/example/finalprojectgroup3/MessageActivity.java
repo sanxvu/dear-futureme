@@ -34,8 +34,6 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     public static String getMessage() {
-
-
         Map<String, Object> videoToMessage = new HashMap<>();
         videoToMessage.put(videoUri.getLastPathSegment(), message.getText().toString());
 

@@ -1,6 +1,5 @@
 package com.example.finalprojectgroup3;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -31,8 +31,7 @@ public class UnearthActivity extends AppCompatActivity {
 
     VideoView videoView;
     MediaController controller;
-    Button nextButton;
-    Button prevButton;
+    HorizontalScrollView horizontalScrollView;
     Button homeButton;
 
     TextView noVideo_text; // In case the user has no videos
@@ -49,31 +48,39 @@ public class UnearthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unearth);
 
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         noVideo_text = findViewById(R.id.noVideo_textView);
         noVideo_Button = findViewById(R.id.noVideo_button);
 
         homeButton = findViewById(R.id.unearth_home_button);
-        videoView = findViewById(R.id.testing_videoView);
-        nextButton = findViewById(R.id.next_button);
-        prevButton = findViewById(R.id.prev_button);
-        prevButton.setEnabled(false); // start with first vid, no back button
+        videoView = findViewById(R.id.unearth_videoView);
 
         userVideosURI = (ArrayList<Uri>) getIntent().getSerializableExtra("arrList");
 
         if(userVideosURI.size() == 0){ // NO VIDEO TO DISPLAY!!!!! PROMPT USER TO GO BACK
             videoView.setVisibility(View.INVISIBLE); // don't show the video view
-            nextButton.setVisibility(View.INVISIBLE); // dont show next button
-            prevButton.setVisibility(View.INVISIBLE); // dont show prev button
 
             noVideo_text.setVisibility(View.VISIBLE); // show the go back buttons and text
             noVideo_Button.setVisibility(View.VISIBLE);
 
         } else { // At least 1 video to display
-            if(userVideosURI.size() == 1){ // If the user only has 1 vid, must not show next button
-                nextButton.setEnabled(false); // no video to show next
-            }
+
+            horizontalScrollView = findViewById(R.id.unearth_scroll);
+            horizontalScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    if(scrollX > oldScrollX){
+                        counter++;
+                    } else if(scrollX < oldScrollX){
+                        counter--;
+                    }
+                    displayVideo(counter);
+                }
+            });
+
 
             controller = new MediaController(this);
             controller.setAnchorView(videoView);
@@ -116,36 +123,10 @@ public class UnearthActivity extends AppCompatActivity {
             });
     }
 
-    public void videoDiaryNext(View v){
-        counter++;
-        if(counter == userVideosURI.size() - 1){
-            nextButton.setEnabled(false);
-        }
-        else if(counter < userVideosURI.size() - 1){
-            nextButton.setEnabled(true);
-        }
-        prevButton.setEnabled(true);
-        displayVideo(counter);
-
-    }
-
-    public void videoDiaryPrev(View v){
-        counter--;
-        if(counter == 0){
-            prevButton.setEnabled(false);;
-        }
-        else if(counter > 0){
-            prevButton.setEnabled(true);;
-        }
-        nextButton.setEnabled(true);
-        displayVideo(counter);
-    }
-
     public void homeFromUnearth(View view) {
         if (view.getId() == R.id.unearth_home_button || view.getId() == R.id.noVideo_button) {
-            Intent call = new Intent(this, HomeActivity.class);
+            Intent call = new Intent(this, StartActivity.class);
             call.putExtra("isNewUser", false);
-            call.putExtra("intentSource", "UnearthActivity");
             startActivity(call);
         }
     }

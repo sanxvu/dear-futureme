@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -24,11 +25,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AdditionalUserInfo;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
@@ -36,12 +43,12 @@ public class HomeActivity extends AppCompatActivity {
     static final int REQUEST_VIDEO_CAPTURE = 1; // For recording
     static final int MEDIA_PICKER_SELECT = 2; // For uploading
 
-    ArrayList<Uri> userVideosURI = new ArrayList<>();
+    ArrayList<Uri> userVideosURI = new ArrayList<>(); // has the URI of vids
 
     boolean isNewUser = true;
 
-    Button unearthButton;
-    TextView unearth_hidden_text;
+    Button unearthButton; // clickable if correct time, unclickable if not correct time/new user
+    TextView unearth_hidden_text; // Text view that appears when unearth button is unclickable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,46 +66,34 @@ public class HomeActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
-            String source = bundle.getString("intentSource");
-            if(source.equals("FinishActivity") || source.equals("UnearthActivity")){ // If source is FinishActivity, must have at least 1 vid to show
-                Log.i("Hit", "Intent from FinishActivity");
-                unearthButton.setEnabled(true);
-                unearth_hidden_text.setVisibility(View.INVISIBLE);
-            }
 
             isNewUser = bundle.getBoolean("isNewUser");
-            if(!isNewUser){ // Not a new user, need to get their videos
+            boolean isCorrectTime = bundle.getBooleanArray("isCorrectTime")[0];
+            userVideosURI = (ArrayList<Uri>) getIntent().getSerializableExtra("userVideosURI");
 
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference listRef = storage.getReference().child(userEmail + "/");
+            if(!isNewUser){ // Not a new user
+                if(isCorrectTime){
+                    Log.i("HomeActivity", " Hit correct time");
+                    unearthButton.setEnabled(true);
+                    unearth_hidden_text.setVisibility(View.INVISIBLE);
 
-                listRef.listAll()
-                        .addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                            @Override
-                            public void onSuccess(ListResult listResult) {
-
-                                System.out.println(listResult.getItems().size());
-
-                                for (StorageReference item : listResult.getItems()) {
-                                    item.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            userVideosURI.add(uri);
-                                            System.out.println("Size userVideosURI: " + userVideosURI.size());
-                                        }
-                                    });
-                                }
-                            }
-                        });
+                } else { // Not the correct time
+                    Log.i("HomeActivity", " Hit Not correct time");
+                    unearthButton.setEnabled(false);
+                    unearth_hidden_text.setText("Not the correct time to unearth!");
+                    unearth_hidden_text.setVisibility(View.VISIBLE);
+                }
 
             } else{ // NEW USER hides the unearth button
-                Log.i("Hit", "New user");
+                Log.i("HomeActivity", "Hit New user");
                 unearthButton.setEnabled(false);
+                unearth_hidden_text.setText("Bury a video before unearthing it!");
                 unearth_hidden_text.setVisibility(View.VISIBLE);
             }
         } else { // Bundle == NULL, just hide just in case
-            Log.i("Hit", "Bundle null");
+            Log.i("HomeActivity", "Bundle null");
             unearthButton.setEnabled(false);
+            unearth_hidden_text.setText("Bury a video before unearthing it!");
             unearth_hidden_text.setVisibility(View.VISIBLE);
         }
     }
