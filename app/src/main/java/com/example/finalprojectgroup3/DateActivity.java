@@ -122,7 +122,7 @@ public class DateActivity extends AppCompatActivity {
             monthDecorator = String.valueOf(monthVersion);
         }
 
-        String dateAndTime = monthDecorator + "." + mDay + "." + mYear + ", " + mHour + ":" + mMinute;
+        String dateAndTime = monthDecorator + "." + mDay + "." + mYear + ", " + mHour+ ":" + mMinute;
         userToDate.put(userName, dateAndTime);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();

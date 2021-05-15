@@ -110,6 +110,14 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    public void signout(View view) {
+        if (view.getId() == R.id.signout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent logoutIntent = new Intent(this, StartActivity.class);
+            startActivity(logoutIntent);
+        }
+    }
+
     public void bury(View view) {
         if (view.getId() == R.id.bury) {
             AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
