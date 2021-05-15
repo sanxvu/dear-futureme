@@ -100,7 +100,7 @@ public class DateActivity extends AppCompatActivity {
         } else {
             monthDecorator = String.valueOf(monthVersion);
         }
-
+        // Format:
         String dateAndTime = monthDecorator + "." + mDay + "." + mYear + ", " + mHour+ ":" + mMinute;
         userToDate.put(userName, dateAndTime);
 
