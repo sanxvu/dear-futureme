@@ -43,9 +43,14 @@ public class MessageActivity extends AppCompatActivity {
 
             ref.updateChildren(videoToMessage);
 
-            Intent call = new Intent(this,DateActivity.class);
-            call.putExtra("editing", false);
-            startActivity(call);
+            if(HomeActivity.isNewUser){
+                Intent call = new Intent(this,DateActivity.class);
+                call.putExtra("editing", false);
+                startActivity(call);
+            } else { // Not a new user
+                Intent call = new Intent(this, FinishActivity.class);
+                startActivity(call);
+            }
         }
     }
 

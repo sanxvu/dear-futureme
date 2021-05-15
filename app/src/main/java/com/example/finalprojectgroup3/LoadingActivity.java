@@ -36,6 +36,8 @@ public class LoadingActivity extends AppCompatActivity {
     String userGivenName;
     Boolean isNewUser;
 
+    String userTime;
+
     long timeDifference;
     boolean[] value = new boolean[1];
     ArrayList<Uri> userVideosURI = new ArrayList<>();
@@ -114,6 +116,7 @@ public class LoadingActivity extends AppCompatActivity {
                     Intent call = new Intent(LoadingActivity.this, HomeActivity.class);
                     call.putExtra("isNewUser", isNewUser);
                     call.putExtra("userVideosURI", userVideosURI);
+                    call.putExtra("userSelectedTime", userTime);
 
                     Log.i("isCorrectTime in start activity", String.valueOf(value[0]));
                     call.putExtra("isCorrectTime", value);
@@ -155,7 +158,9 @@ public class LoadingActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     SimpleDateFormat sdf = new SimpleDateFormat("MM.dd.yyyy, HH:mm", Locale.getDefault());
                     try {
-                        Date userSetDateTime = sdf.parse(task.getResult().getValue().toString());
+                        userTime = task.getResult().getValue().toString();
+
+                        Date userSetDateTime = sdf.parse(userTime);
 
                         Log.i("user set time", task.getResult().getValue().toString());
 
