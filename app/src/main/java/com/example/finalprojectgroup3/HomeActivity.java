@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
 
     ArrayList<Uri> userVideosURI = new ArrayList<>(); // has the URI of vids
 
-    boolean isNewUser = true;
+    public static boolean isNewUser;
     boolean isEditing = true;
 
     Button unearthButton; // clickable if correct time, unclickable if not correct time/new user
@@ -70,12 +70,6 @@ public class HomeActivity extends AppCompatActivity {
         unearth_hidden_text = findViewById(R.id.unearth_hidden_textView);
         changeTimeButton = findViewById(R.id.changeTime);
 
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        String userEmail = "";
-        if (acct != null) {
-            userEmail = acct.getEmail();
-        }
-
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
 
@@ -91,6 +85,9 @@ public class HomeActivity extends AppCompatActivity {
 
                 } else { // Not the correct time
                     Log.i("HomeActivity", " Hit Not correct time");
+
+                    String userSelectedTime = bundle.getString("userSelectedTime"); // <<<<<<
+
                     unearthButton.setEnabled(false);
                     unearth_hidden_text.setText("Not the correct time to unearth!");
                     unearth_hidden_text.setVisibility(View.VISIBLE);
