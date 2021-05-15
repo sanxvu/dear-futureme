@@ -75,7 +75,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private void updateUI(@Nullable FirebaseUser account){
         if (account != null) {
-            Toast.makeText(getApplicationContext(), "Signed in!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Signed in!", Toast.LENGTH_LONG).show();
             Log.d(TAG, "SIGNED IN!!");
 
             Intent call = new Intent(StartActivity.this, LoadingActivity.class);
@@ -84,8 +84,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
             // need to update this with a TextView or something
         } else {
-            Toast.makeText(getApplicationContext(), "Signed out!!", Toast.LENGTH_LONG).show();
-            Log.d(TAG, "SIGNED IN!!");
+            Toast.makeText(getApplicationContext(), "Signed out!", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "SIGNED OUT!!");
         }
     }
 
