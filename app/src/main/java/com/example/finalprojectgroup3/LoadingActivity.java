@@ -1,11 +1,16 @@
 package com.example.finalprojectgroup3;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,19 +37,43 @@ public class LoadingActivity extends AppCompatActivity {
     boolean[] value = new boolean[1];
     ArrayList<Uri> userVideosURI = new ArrayList<>();
 
+    ProgressBar progressBar;
+    CountDownTimer mCountDownTimer;
+    int i = 0;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        // animate progressbar for about 3 seconds
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setProgress(i);
+        mCountDownTimer = new CountDownTimer(5000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.v("Log_tag", "Tick of Progress" + i + millisUntilFinished);
+                i++;
+                progressBar.setProgress((int) i * 100 / (5000 / 1000));
+            }
 
+            @Override
+            public void onFinish() {
+                //Do what you want
+                i++;
+                progressBar.setProgress(100);
+            }
+        };
+        mCountDownTimer.start();
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             userName = acct.getDisplayName();
             userEmail = acct.getEmail();
         }
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle!= null){
+        if (bundle != null) {
             isNewUser = bundle.getBoolean("isNewUser");
             Handler handler = new Handler();
             isCorrectTime();
@@ -65,8 +94,8 @@ public class LoadingActivity extends AppCompatActivity {
         }
     }
 
-    public void retrieveVideoURI(){
-        if(!isNewUser){ // Returning user
+    public void retrieveVideoURI() {
+        if (!isNewUser) { // Returning user
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference listRef = storage.getReference().child(userEmail + "/");
 
@@ -88,29 +117,32 @@ public class LoadingActivity extends AppCompatActivity {
         }
     }
 
-    public void isCorrectTime(){
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users_date").child(userName).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM.dd.yyyy, HH:mm", Locale.getDefault());
-                try {
-                    Date userSetDateTime = sdf.parse(task.getResult().getValue().toString());
+    public void isCorrectTime() {
+        if (isNewUser) {
+            value[0] = false;
+        } else {
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+            mDatabase.child("users_date").child(userName).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM.dd.yyyy, HH:mm", Locale.getDefault());
+                    try {
+                        Date userSetDateTime = sdf.parse(task.getResult().getValue().toString());
 
-                    Log.i("user set time", task.getResult().getValue().toString());
+                        Log.i("user set time", task.getResult().getValue().toString());
 
-                    //timeDifference = userSetDateTime.getTime() - System.currentTimeMillis();
+                        //timeDifference = userSetDateTime.getTime() - System.currentTimeMillis();
 
-                    timeDifference = TimeUnit.SECONDS.convert(userSetDateTime.getTime() - System.currentTimeMillis(),
-                            TimeUnit.SECONDS);
-                    Log.i("difference value in try catch", String.valueOf(timeDifference));
-                    Log.i("difference in the try catch", String.valueOf(timeDifference <= 0));
+                        timeDifference = TimeUnit.SECONDS.convert(userSetDateTime.getTime() - System.currentTimeMillis(),
+                                TimeUnit.SECONDS);
+                        Log.i("difference value in try catch", String.valueOf(timeDifference));
+                        Log.i("difference in the try catch", String.valueOf(timeDifference <= 0));
 
-                    value[0] = timeDifference <=0;
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                        value[0] = timeDifference <= 0;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
-
