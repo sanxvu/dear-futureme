@@ -73,7 +73,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         updateUI(currentUser);
     }
 
-    private void updateUI(@Nullable FirebaseUser account){
+    private void updateUI(@Nullable FirebaseUser account) {
         if (account != null) {
             Toast.makeText(getApplicationContext(), "Signed in!", Toast.LENGTH_LONG).show();
             Log.d(TAG, "SIGNED IN!!");
@@ -81,7 +81,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             Intent call = new Intent(StartActivity.this, LoadingActivity.class);
             call.putExtra("isNewUser", isNewUser);
             startActivity(call);
-
             // need to update this with a TextView or something
         } else {
             Toast.makeText(getApplicationContext(), "Signed out!", Toast.LENGTH_LONG).show();
