@@ -35,6 +35,7 @@
         <activity android:name=".MessageActivity" />
         <activity android:name=".DateActivity" />
         <activity android:name=".HomeActivity" />
+        <activity android:name=".LoadingActivity"/>
         <activity android:name=".UnearthActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>

@@ -16,9 +16,8 @@ public class FinishActivity extends AppCompatActivity {
 
     public void home(View view) {
         if (view.getId() == R.id.backToHome) {
-            Intent call = new Intent(this, HomeActivity.class);
+            Intent call = new Intent(this, StartActivity.class);
             call.putExtra("isNewUser", false);
-            call.putExtra("intentSource", "FinishActivity");
             startActivity(call);
         }
     }

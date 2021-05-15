@@ -6,17 +6,25 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
-import java.util.ArrayList;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DateActivity extends AppCompatActivity {
 
+    private static String userName;
     Button btnDatePicker;
     Button btnTimePicker;
     EditText txtDate;
@@ -33,6 +41,12 @@ public class DateActivity extends AppCompatActivity {
         btnTimePicker=(Button)findViewById(R.id.timeButton);
         txtDate=(EditText)findViewById(R.id.in_date);
         txtTime=(EditText)findViewById(R.id.in_time);
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        userName = "";
+        if (acct != null) {
+            userName = acct.getDisplayName();
+        }
     }
 
     public void onClick(View v) {
@@ -50,6 +64,9 @@ public class DateActivity extends AppCompatActivity {
                                               int monthOfYear, int dayOfMonth) {
 
                             txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                            mYear = year;
+                            mMonth = monthOfYear;
+                            mDay = dayOfMonth;
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
@@ -66,6 +83,8 @@ public class DateActivity extends AppCompatActivity {
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
                             txtTime.setText(hourOfDay + ":" + minute);
+                            mHour = hourOfDay;
+                            mMinute = minute;
                         }
                     }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -73,6 +92,23 @@ public class DateActivity extends AppCompatActivity {
     }
 
     public static String getDate() {
+        Map<String, Object> userToDate = new HashMap<>();
+        int monthVersion = mMonth + 1;
+        String monthDecorator;
+        if(monthVersion < 10){
+            monthDecorator = "0"+monthVersion;
+        } else {
+            monthDecorator = String.valueOf(monthVersion);
+        }
+
+        String dateAndTime = monthDecorator + "." + mDay + "." + mYear + ", " + mHour+ ":" + mMinute;
+        userToDate.put(userName, dateAndTime);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("users_date");
+
+        ref.updateChildren(userToDate);
+
         String month = MONTHS[mMonth];
         return "Date: " + month + " " + mDay + ", " + mYear + "\nTime: " + mHour + ":" + mMinute;
     }
