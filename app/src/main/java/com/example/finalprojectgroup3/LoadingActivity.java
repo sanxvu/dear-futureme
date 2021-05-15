@@ -11,6 +11,8 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,30 +33,51 @@ import java.util.concurrent.TimeUnit;
 public class LoadingActivity extends AppCompatActivity {
     String userName;
     String userEmail;
+    String userGivenName;
     Boolean isNewUser;
 
     long timeDifference;
     boolean[] value = new boolean[1];
     ArrayList<Uri> userVideosURI = new ArrayList<>();
 
+    VideoView loading_videoView;
+    TextView loadingMessage_textView;
+    TextView progress_textView;
+
     ProgressBar progressBar;
     CountDownTimer mCountDownTimer;
     int i = 0;
 
+    int delayTimeMilliseconds = 3500;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
+        progress_textView = findViewById(R.id.progress_textView);
+        loadingMessage_textView = findViewById(R.id.loadingMessage_textView);
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
+            userName = acct.getDisplayName();
+            userEmail = acct.getEmail();
+            userGivenName = acct.getGivenName();
+        }
+
         // animate progressbar for about 3 seconds
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setProgress(i);
-        mCountDownTimer = new CountDownTimer(5000, 1000) {
+        mCountDownTimer = new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.v("Log_tag", "Tick of Progress" + i + millisUntilFinished);
                 i++;
-                progressBar.setProgress((int) i * 100 / (5000 / 1000));
+                if(i == 2){
+                    progress_textView.setText("Retrieving your memories...");
+                } else if (i==3){
+                    progress_textView.setText("Almost there...");
+                }
+                progressBar.setProgress((int) i * 100 / (3000/ 1000));
             }
 
             @Override
@@ -66,15 +89,21 @@ public class LoadingActivity extends AppCompatActivity {
         };
         mCountDownTimer.start();
 
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if (acct != null) {
-            userName = acct.getDisplayName();
-            userEmail = acct.getEmail();
-        }
+        loading_videoView = findViewById(R.id.loading_videoView);
+        loading_videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.loading_bg);
+        loading_videoView.setOnPreparedListener(mp ->{
+            loading_videoView.start();
+        });
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             isNewUser = bundle.getBoolean("isNewUser");
+            if(isNewUser){
+                loadingMessage_textView.setText("Welcome, " + userGivenName + "!");
+            } else {
+                loadingMessage_textView.setText("Hi "+ userGivenName + "!");
+            }
+
             Handler handler = new Handler();
             isCorrectTime();
             retrieveVideoURI();
@@ -90,7 +119,7 @@ public class LoadingActivity extends AppCompatActivity {
                     call.putExtra("isCorrectTime", value);
                     startActivity(call);
                 }
-            }, 3000);
+            }, delayTimeMilliseconds);
         }
     }
 
