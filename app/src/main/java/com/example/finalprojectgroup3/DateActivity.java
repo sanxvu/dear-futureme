@@ -115,7 +115,7 @@ public class DateActivity extends AppCompatActivity {
 
     public void next(View view) {
         if (view.getId() == R.id.nextToConfirmation) {
-            Intent call = new Intent(this,ConfirmationActivity.class);
+            Intent call = new Intent(this, FinishActivity.class);
             startActivity(call);
         }
     }
