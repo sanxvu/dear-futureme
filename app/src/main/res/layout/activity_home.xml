@@ -60,6 +60,19 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/unearth_hidden_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Bury a video before unearthing it!"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unearth"
+        app:layout_constraintVertical_bias="0.003" />
+
     <Button
         android:id="@+id/signout"
         android:layout_width="247dp"
@@ -70,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/unearth"
-        app:layout_constraintVertical_bias="0.687" />
+        app:layout_constraintVertical_bias="0.829" />
 
     <TextView
         android:id="@+id/textView3"
@@ -84,16 +97,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.064" />
 
-    <TextView
-        android:id="@+id/unearth_hidden_textView"
+    <Button
+        android:id="@+id/changeTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
-        android:visibility="invisible"
-        android:text="Bury a video before unearthing it!"
+        android:layout_marginTop="28dp"
+        android:onClick="changeTime"
+        android:text="change time"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unearth" />
+        app:layout_constraintTop_toBottomOf="@+id/unearth_hidden_textView"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
