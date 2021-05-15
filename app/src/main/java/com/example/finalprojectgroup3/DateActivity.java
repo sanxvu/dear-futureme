@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,20 +28,40 @@ public class DateActivity extends AppCompatActivity {
     private static String userName;
     Button btnDatePicker;
     Button btnTimePicker;
+
+    Button back;
+    boolean isEditing = false;
+
     EditText txtDate;
     EditText txtTime;
+
     private static int mYear, mMonth, mDay, mHour, mMinute;
-    private static String[] MONTHS = new String[] {"January","February","March","April","May","June","July","August","September","October","November","December"};
+    private static String[] MONTHS = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date);
 
-        btnDatePicker=(Button)findViewById(R.id.dateButton);
-        btnTimePicker=(Button)findViewById(R.id.timeButton);
-        txtDate=(EditText)findViewById(R.id.in_date);
-        txtTime=(EditText)findViewById(R.id.in_time);
+        btnDatePicker = (Button) findViewById(R.id.dateButton);
+        btnTimePicker = (Button) findViewById(R.id.timeButton);
+        txtDate = (EditText) findViewById(R.id.in_date);
+        txtTime = (EditText) findViewById(R.id.in_time);
+        back = (Button) findViewById(R.id.backToMessage);
+
+        // don't show back button if user is just editing date/time
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            isEditing = bundle.getBoolean("editing");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    back.setVisibility(View.GONE);
+                }
+            }, 3000);
+        } else //show back button
+            back.setVisibility(View.VISIBLE);
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         userName = "";
@@ -95,12 +116,12 @@ public class DateActivity extends AppCompatActivity {
         Map<String, Object> userToDate = new HashMap<>();
         int monthVersion = mMonth + 1;
         String monthDecorator;
-        if(monthVersion < 10){
-            monthDecorator = "0"+monthVersion;
+        if (monthVersion < 10) {
+            monthDecorator = "0" + monthVersion;
         } else {
             monthDecorator = String.valueOf(monthVersion);
         }
-        // Format:
+
         String dateAndTime = monthDecorator + "." + mDay + "." + mYear + ", " + mHour+ ":" + mMinute;
         userToDate.put(userName, dateAndTime);
 
@@ -115,13 +136,20 @@ public class DateActivity extends AppCompatActivity {
 
     public void next(View view) {
         if (view.getId() == R.id.nextToConfirmation) {
-            Intent call = new Intent(this,ConfirmationActivity.class);
+            Intent call;
+            if (isEditing) {
+                 call = new Intent(this, LoadingActivity.class);
+            }
+            else {
+                 call = new Intent(this, FinishActivity.class);
+            }
             startActivity(call);
         }
     }
+
     public void back(View view) {
         if (view.getId() == R.id.backToMessage) {
-            Intent call = new Intent(this,MessageActivity.class);
+            Intent call = new Intent(this, MessageActivity.class);
             startActivity(call);
         }
     }

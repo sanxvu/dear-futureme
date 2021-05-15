@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
@@ -16,7 +18,10 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -46,9 +51,15 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<Uri> userVideosURI = new ArrayList<>(); // has the URI of vids
 
     boolean isNewUser = true;
+    boolean isEditing = true;
 
     Button unearthButton; // clickable if correct time, unclickable if not correct time/new user
     TextView unearth_hidden_text; // Text view that appears when unearth button is unclickable
+    Button changeTimeButton;
+
+    private static int mYear, mMonth, mDay, mHour, mMinute;
+    private static String[] MONTHS = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
 
         unearthButton = findViewById(R.id.unearth);
         unearth_hidden_text = findViewById(R.id.unearth_hidden_textView);
+        changeTimeButton = findViewById(R.id.changeTime);
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         String userEmail = "";
@@ -145,6 +157,14 @@ public class HomeActivity extends AppCompatActivity {
         if (view.getId() == R.id.unearth) {
             Intent call = new Intent(HomeActivity.this, UnearthActivity.class);
             call.putExtra("arrList", userVideosURI);
+            startActivity(call);
+        }
+    }
+
+    public void changeTime(View view) {
+        if (view.getId() == R.id.changeTime) {
+            Intent call = new Intent(HomeActivity.this, DateActivity.class);
+            call.putExtra("editing", isEditing);
             startActivity(call);
         }
     }
