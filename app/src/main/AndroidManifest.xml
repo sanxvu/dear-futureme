@@ -31,7 +31,6 @@
 
         <activity android:name=".FinishActivity" />
         <activity android:name=".VideoActivity" />
-        <activity android:name=".ConfirmationActivity" />
         <activity android:name=".MessageActivity" />
         <activity android:name=".DateActivity" />
         <activity android:name=".HomeActivity" />

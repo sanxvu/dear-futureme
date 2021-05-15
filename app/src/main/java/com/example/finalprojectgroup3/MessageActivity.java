@@ -33,24 +33,22 @@ public class MessageActivity extends AppCompatActivity {
         }
     }
 
-    public static String getMessage() {
-        Map<String, Object> videoToMessage = new HashMap<>();
-        videoToMessage.put(videoUri.getLastPathSegment(), message.getText().toString());
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("messages");
-
-        ref.updateChildren(videoToMessage);
-        return "Message:\n" + message.getText().toString();
-
-    }
-
     public void next(View view) {
         if (view.getId() == R.id.nextToDate) {
+            Map<String, Object> videoToMessage = new HashMap<>();
+            videoToMessage.put(videoUri.getLastPathSegment(), message.getText().toString());
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference ref = database.getReference("messages");
+
+            ref.updateChildren(videoToMessage);
+
             Intent call = new Intent(this,DateActivity.class);
+            call.putExtra("editing", false);
             startActivity(call);
         }
     }
+
     public void back(View view) {
         if (view.getId() == R.id.backToVideo) {
             Intent call = new Intent(this,VideoActivity.class);
