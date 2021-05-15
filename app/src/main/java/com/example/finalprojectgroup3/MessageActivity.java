@@ -44,9 +44,11 @@ public class MessageActivity extends AppCompatActivity {
             ref.updateChildren(videoToMessage);
 
             Intent call = new Intent(this,DateActivity.class);
+            call.putExtra("editing", false);
             startActivity(call);
         }
     }
+
     public void back(View view) {
         if (view.getId() == R.id.backToVideo) {
             Intent call = new Intent(this,VideoActivity.class);

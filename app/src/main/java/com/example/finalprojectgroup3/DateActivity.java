@@ -53,15 +53,12 @@ public class DateActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             isEditing = bundle.getBoolean("editing");
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    back.setVisibility(View.GONE);
-                }
-            }, 3000);
-        } else //show back button
-            back.setVisibility(View.VISIBLE);
+            if(isEditing){
+                back.setVisibility(View.GONE);
+            } else { //show back button
+                back.setVisibility(View.VISIBLE);
+            }
+        }
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         userName = "";
@@ -112,7 +109,7 @@ public class DateActivity extends AppCompatActivity {
         }
     }
 
-    public static String getDate() {
+    public void next(View view) {
         Map<String, Object> userToDate = new HashMap<>();
         int monthVersion = mMonth + 1;
         String monthDecorator;
@@ -130,15 +127,11 @@ public class DateActivity extends AppCompatActivity {
 
         ref.updateChildren(userToDate);
 
-        String month = MONTHS[mMonth];
-        return "Date: " + month + " " + mDay + ", " + mYear + "\nTime: " + mHour + ":" + mMinute;
-    }
-
-    public void next(View view) {
         if (view.getId() == R.id.nextToConfirmation) {
             Intent call;
             if (isEditing) {
                  call = new Intent(this, LoadingActivity.class);
+                 call.putExtra("isNewUser", false); // through editing way, not new user
             }
             else {
                  call = new Intent(this, FinishActivity.class);
