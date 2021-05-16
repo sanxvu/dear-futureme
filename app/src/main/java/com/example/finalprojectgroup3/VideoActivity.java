@@ -74,9 +74,6 @@ public class VideoActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Log.i("TAG", "SUCCESS UPLOAD TO FIREBASE");
-                    Toast.makeText(VideoActivity.this,
-                            "Video Uploaded!!",
-                            Toast.LENGTH_SHORT).show();
                 }
             });
 

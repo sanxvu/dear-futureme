@@ -65,8 +65,8 @@ public class UnearthActivity extends AppCompatActivity {
         videoView = findViewById(R.id.unearth_videoView);
         userVideosURI = (ArrayList<Uri>) getIntent().getSerializableExtra("arrList");
 
-        if(userVideosURI.size() == 1){ // Only 1 video to show, no next button
-            prevVideo_button.setEnabled(false);
+        if(userVideosURI.size() == 1) { // Only 1 video to show, no next button
+            nextVideo_button.setEnabled(false);
         }
 
         controller = new MediaController(this);
