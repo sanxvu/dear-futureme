@@ -2,12 +2,13 @@ package com.example.finalprojectgroup3;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -30,7 +31,9 @@ public class DateActivity extends AppCompatActivity {
     Button btnTimePicker;
 
     Button back;
-    boolean isEditing = false;
+    boolean isEditing;
+    boolean setDate;
+    boolean setTime;
 
     EditText txtDate;
     EditText txtTime;
@@ -53,7 +56,9 @@ public class DateActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             isEditing = bundle.getBoolean("editing");
-            if(isEditing){
+            if (isEditing) {
+                setDate = false;
+                setTime = false;
                 back.setVisibility(View.GONE);
             } else { //show back button
                 back.setVisibility(View.VISIBLE);
@@ -67,15 +72,17 @@ public class DateActivity extends AppCompatActivity {
         }
     }
 
+    // Show date and time picker when they click on the set date/set time
     public void onClick(View v) {
         if (v == btnDatePicker) {
+            setDate = true;
             // Get Current Date
             final Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DateTimeDialogCustom,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year,
@@ -90,12 +97,13 @@ public class DateActivity extends AppCompatActivity {
             datePickerDialog.show();
         }
         if (v == btnTimePicker) {
+            setTime = true;
             // Get Current Time
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
             // Launch Time Picker Dialog
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.DateTimeDialogCustom,
                     new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
@@ -119,7 +127,7 @@ public class DateActivity extends AppCompatActivity {
             monthDecorator = String.valueOf(monthVersion);
         }
 
-        String dateAndTime = monthDecorator + "." + mDay + "." + mYear + ", " + mHour+ ":" + mMinute;
+        String dateAndTime = monthDecorator + "." + mDay + "." + mYear + ", " + mHour + ":" + mMinute;
         userToDate.put(userName, dateAndTime);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -128,15 +136,29 @@ public class DateActivity extends AppCompatActivity {
         ref.updateChildren(userToDate);
 
         if (view.getId() == R.id.nextToConfirmation) {
-            Intent call;
-            if (isEditing) {
-                 call = new Intent(this, LoadingActivity.class);
-                 call.putExtra("isNewUser", false); // through editing way, not new user
+            // Show alert if user didn't set date and time
+            if (!setDate || !setTime) {
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+                builder.setTitle("Error");
+                builder.setMessage("Please set the date and time.");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                androidx.appcompat.app.AlertDialog alert = builder.create();
+                alert.show();
+                alert.setCanceledOnTouchOutside(true);
+            } else {
+                Intent call;
+                if (isEditing) {
+                    call = new Intent(this, LoadingActivity.class);
+                    call.putExtra("isNewUser", false); // through editing way, not new user
+                } else {
+                    call = new Intent(this, FinishActivity.class);
+                }
+                startActivity(call);
             }
-            else {
-                 call = new Intent(this, FinishActivity.class);
-            }
-            startActivity(call);
         }
     }
 

@@ -51,7 +51,6 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<Uri> userVideosURI = new ArrayList<>(); // has the URI of vids
 
     public static boolean isNewUser;
-    boolean isEditing = true;
 
     Button unearthButton; // clickable if correct time, unclickable if not correct time/new user
     TextView unearth_hidden_text; // Text view that appears when unearth button is unclickable
@@ -143,9 +142,9 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }
             });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            dialog.setCanceledOnTouchOutside(true);
+            AlertDialog alert = builder.create();
+            alert.show();
+            alert.setCanceledOnTouchOutside(true);
         }
     }
 
@@ -161,7 +160,7 @@ public class HomeActivity extends AppCompatActivity {
     public void changeTime(View view) {
         if (view.getId() == R.id.changeTime) {
             Intent call = new Intent(HomeActivity.this, DateActivity.class);
-            call.putExtra("editing", isEditing);
+            call.putExtra("editing", true);
             startActivity(call);
         }
     }
