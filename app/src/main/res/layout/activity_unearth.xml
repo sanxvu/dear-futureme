@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/nudebg">
 
+
+
     <Button
         android:id="@+id/unearth_home_button"
         android:layout_width="wrap_content"
@@ -44,39 +46,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <Button
-            android:id="@+id/readMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="128dp"
-            android:layout_marginBottom="44dp"
-            android:onClick="onClickMessagePopup"
-            android:text="From PastMe..."
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/noVideo_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="292dp"
-            android:layout_marginEnd="68dp"
+            android:layout_marginTop="300dp"
+            android:layout_gravity="center"
             android:text="No videos to unearth! Please upload a video"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="invisible" />
 
         <Button
-            android:id="@+id/noVideo_button"
+            android:id="@+id/readMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="124dp"
-            android:onClick="homeFromUnearth"
-            android:text="Return to home"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/noVideo_textView" />
+            android:layout_marginTop="325dp"
+            android:onClick="onClickMessagePopup"
+            android:layout_gravity="center"
+            android:text="From Past Me..." />
     </LinearLayout>
 
 
