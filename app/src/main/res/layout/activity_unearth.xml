@@ -8,17 +8,6 @@
     android:background="@drawable/nudebg">
 
 
-    <Button
-        android:id="@+id/unearth_home_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="28dp"
-        android:onClick="homeFromUnearth"
-        android:text="Home"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <VideoView
         android:id="@+id/unearth_videoView"
         android:layout_width="match_parent"
@@ -29,61 +18,51 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <Button
+        android:id="@+id/unearth_home_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:onClick="homeFromUnearth"
+        android:text="Home"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/noVideo_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="300dp"
-            android:text="No videos to unearth! Please upload a video"
-            android:visibility="invisible" />
+    <Button
+        android:id="@+id/readMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:onClick="onClickMessagePopup"
+        android:text="From Past Me"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/unearth_next"
+        app:layout_constraintStart_toEndOf="@+id/unearth_prev" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="325dp"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/unearth_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="40dp"
+        android:onClick="nextVideo"
+        android:text="next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-            <!--            <Button-->
-            <!--                android:id="@+id/unearth_backButton"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="center"-->
-            <!--                android:layout_marginStart="36dp"-->
-            <!--                android:onClick="prevVideo"-->
-            <!--                android:text="prev" />-->
+    <Button
+        android:id="@+id/unearth_prev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginBottom="40dp"
+        android:onClick="prevVideo"
 
-            <Button
-                android:id="@+id/readMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-
-                android:onClick="onClickMessagePopup"
-                android:text="From Past Me..." />
-
-            <!--            <Button-->
-            <!--                android:id="@+id/unearth_nextButton"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_marginStart="20dp"-->
-            <!--                android:layout_gravity="center"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:onClick="nextVideo"-->
-            <!--                android:text="next" />-->
-
-        </LinearLayout>
-
-    </LinearLayout>
+        android:text="back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

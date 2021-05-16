@@ -53,9 +53,17 @@ public class HomeActivity extends AppCompatActivity {
             if(!isNewUser){ // Not a new user
                 if(isCorrectTime){
                     Log.i("HomeActivity", " Hit correct time");
+
+                    if(userVideosURI.size() == 0){
+                        unearthButton.setEnabled(false);
+                        unearth_hidden_text.setText("Add more videos or update your date & time.");
+                        unearth_hidden_text.setVisibility(View.VISIBLE);
+                    }
+
                     unearthButton.setEnabled(true);
                     unearth_hidden_text.setText("It's time to unearth your memories!\nAdd more videos or update your date & time.");
                     unearth_hidden_text.setVisibility(View.VISIBLE);
+
                 } else { // Not the correct time
                     Log.i("HomeActivity", " Hit Not correct time");
 
@@ -69,6 +77,7 @@ public class HomeActivity extends AppCompatActivity {
             } else{ // NEW USER hides the unearth button
                 Log.i("HomeActivity", "Hit New user");
                 unearthButton.setEnabled(false);
+                changeTimeButton.setEnabled(false);
                 unearth_hidden_text.setText("Bury a video before unearthing it!");
                 unearth_hidden_text.setVisibility(View.VISIBLE);
             }

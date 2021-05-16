@@ -41,10 +41,8 @@ public class UnearthActivity extends AppCompatActivity {
     VideoView videoView;
     MediaController controller;
     Button homeButton;
-//    Button nextVideo_button;
-//    Button prevVideo_button;
-
-    TextView noVideo_text; // In case the user has no videos
+    Button nextVideo_button;
+    Button prevVideo_button;
 
     ArrayList<Uri> userVideosURI;
     int counter = 0;
@@ -59,97 +57,53 @@ public class UnearthActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        noVideo_text = findViewById(R.id.noVideo_textView);
-
         homeButton = findViewById(R.id.unearth_home_button);
-//        nextVideo_button = findViewById(R.id.unearth_nextButton);
-//        prevVideo_button = findViewById(R.id.unearth_backButton);
-        //prevVideo_button.setEnabled(false);
+        nextVideo_button = findViewById(R.id.unearth_next);
+        prevVideo_button = findViewById(R.id.unearth_prev);
+        prevVideo_button.setEnabled(false);
 
         videoView = findViewById(R.id.unearth_videoView);
         userVideosURI = (ArrayList<Uri>) getIntent().getSerializableExtra("arrList");
 
-        if (userVideosURI.size() == 0) { // NO VIDEO TO DISPLAY!!!!! PROMPT USER TO GO BACK
-            videoView.setVisibility(View.INVISIBLE); // don't show the video view
-            //nextVideo_button.setEnabled(false);
-            noVideo_text.setVisibility(View.VISIBLE); // show the go back buttons and text
+        if(userVideosURI.size() == 1){ // Only 1 video to show, no next button
+            prevVideo_button.setEnabled(false);
         }
-
 
         controller = new MediaController(this);
         controller.setAnchorView(videoView);
         controller.setMediaPlayer(videoView);
         videoView.setMediaController(controller);
 
-        displayVideo(0);
+        displayVideo(counter);
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         userEmail = "";
         if (acct != null) {
             userEmail = acct.getEmail();
         }
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-
-        View touchView = findViewById(R.id.constraintLayout);
-        touchView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                float xCoor = event.getX();
-                Log.i("coordinate", String.valueOf(xCoor));
-                if(xCoor > (width/2 + 100) && (counter + 1 != userVideosURI.size())){ // right click
-                    counter++;
-                    displayVideo(counter);
-                } else if (xCoor < (width/2 - 100) && (counter - 1 >= 0)){
-                    counter--;
-                    displayVideo(counter);
-                }
-
-                return true;
-            }
-        });
-
     }
 
-//    boolean areButtonsThere = false;
-//
-//    public void clickToDisappearAppear(View v){
-//        if(areButtonsThere == true){ // The buttons are there, make disappear
-//            homeButton.setVisibility(View.INVISIBLE);
-//            nextVideo_button.setVisibility(View.INVISIBLE);
-//            prevVideo_button.setVisibility(View.INVISIBLE);
-//            message_button.setVisibility(View.INVISIBLE);
-//            areButtonsThere = false;
-//        } else { // Buttons disappear, make appear
-//            homeButton.setVisibility(View.VISIBLE);
-//            nextVideo_button.setVisibility(View.VISIBLE);
-//            prevVideo_button.setVisibility(View.VISIBLE);
-//            message_button.setVisibility(View.VISIBLE);
-//        }
-//    }
+    public void nextVideo(View view){
+        counter++;
+        if(counter == userVideosURI.size() - 1){ // last video
+            nextVideo_button.setEnabled(false);
+        } else if(counter < userVideosURI.size() - 1){ // not the last video
+            nextVideo_button.setEnabled(true);
+        }
+        displayVideo(counter);
+        prevVideo_button.setEnabled(true);
+    }
 
-//    public void nextVideo(View view){
-//        if(counter + 1 < userVideosURI.size()){
-//            counter++;
-//            nextVideo_button.setEnabled(true);
-//            displayVideo(counter);
-//        } else {
-//            nextVideo_button.setEnabled(false);
-//        }
-//    }
-//
-//    public void prevVideo(View view){
-//        if(counter - 1 >= 0){
-//            counter--;
-//            prevVideo_button.setEnabled(true);
-//            displayVideo(counter);
-//        } else {
-//            prevVideo_button.setEnabled(false);
-//        }
-//    }
+    public void prevVideo(View view){
+        counter--;
+        if(counter == 0){//first vid
+            prevVideo_button.setEnabled(false);
+        } else if(counter > 0){
+            prevVideo_button.setEnabled(true);
+        }
+        displayVideo(counter);
+        nextVideo_button.setEnabled(true);
+    }
 
     public void displayVideo(int currCounter) { // Display the video with URI at currCounter
         videoView.setVideoURI(userVideosURI.get(currCounter));
