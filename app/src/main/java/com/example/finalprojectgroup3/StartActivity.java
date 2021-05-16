@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -45,7 +44,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_start);
 
         start_videoView = findViewById(R.id.start_videoView);
-        start_videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.start_bg);
+        start_videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.starting_bg);
         start_videoView.setOnPreparedListener(mp ->{
             start_videoView.start();
             mp.setLooping(true);
