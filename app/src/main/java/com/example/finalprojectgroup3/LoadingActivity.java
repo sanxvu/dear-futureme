@@ -107,7 +107,9 @@ public class LoadingActivity extends AppCompatActivity {
             }
 
             Handler handler = new Handler();
-            isCorrectTime();
+            if(!isNewUser){ // Returning user, calculate time
+                isCorrectTime();
+            }
             retrieveVideoURI();
 
             handler.postDelayed(new Runnable() {
