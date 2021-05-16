@@ -1,13 +1,16 @@
 package com.example.finalprojectgroup3;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,8 +40,10 @@ public class UnearthActivity extends AppCompatActivity {
 
     VideoView videoView;
     MediaController controller;
-    HorizontalScrollView horizontalScrollView;
     Button homeButton;
+//    Button nextVideo_button;
+//    Button prevVideo_button;
+    Button message_button;
 
     TextView noVideo_text; // In case the user has no videos
 
@@ -58,16 +63,21 @@ public class UnearthActivity extends AppCompatActivity {
         noVideo_text = findViewById(R.id.noVideo_textView);
 
         homeButton = findViewById(R.id.unearth_home_button);
-        videoView = findViewById(R.id.unearth_videoView);
+        message_button = findViewById(R.id.readMessage);
+//        nextVideo_button = findViewById(R.id.unearth_nextButton);
+//        prevVideo_button = findViewById(R.id.unearth_backButton);
+        //prevVideo_button.setEnabled(false);
 
+        videoView = findViewById(R.id.unearth_videoView);
         userVideosURI = (ArrayList<Uri>) getIntent().getSerializableExtra("arrList");
 
         if (userVideosURI.size() == 0) { // NO VIDEO TO DISPLAY!!!!! PROMPT USER TO GO BACK
             videoView.setVisibility(View.INVISIBLE); // don't show the video view
-
+            //nextVideo_button.setEnabled(false);
             noVideo_text.setVisibility(View.VISIBLE); // show the go back buttons and text
-
         }
+
+
         controller = new MediaController(this);
         controller.setAnchorView(videoView);
         controller.setMediaPlayer(videoView);
@@ -80,36 +90,68 @@ public class UnearthActivity extends AppCompatActivity {
         if (acct != null) {
             userEmail = acct.getEmail();
         }
-        horizontalScrollView = findViewById(R.id.unearth_scroll);
-//        horizontalScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                if (scrollX > oldScrollX) {
-//                    counter++;
-//                } else if (scrollX < oldScrollX) {
-//                    counter--;
-//                }
-//                displayVideo(counter);
-//            }
-//        });
 
-        horizontalScrollView.setOnTouchListener(new OnSwipeTouchListener(this) {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+
+        View touchView = findViewById(R.id.constraintLayout);
+        touchView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onSwipeLeft() {
-                if(counter+1 != userVideosURI.size()){
+            public boolean onTouch(View v, MotionEvent event) {
+                float xCoor = event.getX();
+                Log.i("coordinate", String.valueOf(xCoor));
+                if(xCoor > (width/2 + 100) && (counter + 1 != userVideosURI.size())){ // right click
                     counter++;
                     displayVideo(counter);
-                }
-            }
-            @Override
-            public void onSwipeRight(){
-                if(counter-1 >= 0){
+                } else if (xCoor < (width/2 - 100) && (counter - 1 >= 0)){
                     counter--;
                     displayVideo(counter);
                 }
+
+                return true;
             }
         });
+
     }
+
+//    boolean areButtonsThere = false;
+//
+//    public void clickToDisappearAppear(View v){
+//        if(areButtonsThere == true){ // The buttons are there, make disappear
+//            homeButton.setVisibility(View.INVISIBLE);
+//            nextVideo_button.setVisibility(View.INVISIBLE);
+//            prevVideo_button.setVisibility(View.INVISIBLE);
+//            message_button.setVisibility(View.INVISIBLE);
+//            areButtonsThere = false;
+//        } else { // Buttons disappear, make appear
+//            homeButton.setVisibility(View.VISIBLE);
+//            nextVideo_button.setVisibility(View.VISIBLE);
+//            prevVideo_button.setVisibility(View.VISIBLE);
+//            message_button.setVisibility(View.VISIBLE);
+//        }
+//    }
+
+//    public void nextVideo(View view){
+//        if(counter + 1 < userVideosURI.size()){
+//            counter++;
+//            nextVideo_button.setEnabled(true);
+//            displayVideo(counter);
+//        } else {
+//            nextVideo_button.setEnabled(false);
+//        }
+//    }
+//
+//    public void prevVideo(View view){
+//        if(counter - 1 >= 0){
+//            counter--;
+//            prevVideo_button.setEnabled(true);
+//            displayVideo(counter);
+//        } else {
+//            prevVideo_button.setEnabled(false);
+//        }
+//    }
 
     public void displayVideo(int currCounter) { // Display the video with URI at currCounter
         videoView.setVideoURI(userVideosURI.get(currCounter));
@@ -144,48 +186,5 @@ public class UnearthActivity extends AppCompatActivity {
         }
     }
 
-    public class OnSwipeTouchListener implements View.OnTouchListener {
-
-        private final GestureDetector gestureDetector;
-
-        public OnSwipeTouchListener(Context context) {
-            gestureDetector = new GestureDetector(context, new GestureListener());
-        }
-
-        public void onSwipeLeft() {
-        }
-
-        public void onSwipeRight() {
-        }
-
-        public boolean onTouch(View v, MotionEvent event) {
-            return gestureDetector.onTouchEvent(event);
-        }
-
-        private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
-
-            private static final int SWIPE_DISTANCE_THRESHOLD = 100;
-            private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-            @Override
-            public boolean onDown(MotionEvent e) {
-                return true;
-            }
-
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                float distanceX = e2.getX() - e1.getX();
-                float distanceY = e2.getY() - e1.getY();
-                if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (distanceX > 0)
-                        onSwipeRight();
-                    else
-                        onSwipeLeft();
-                    return true;
-                }
-                return false;
-            }
-        }
-    }
 
 }
