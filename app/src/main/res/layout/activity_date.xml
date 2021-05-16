@@ -15,12 +15,13 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/dateButton"
         android:layout_alignLeft="@id/in_time"
-        android:layout_marginTop="16dp"
         android:onClick="onClick"
         android:text="SELECT TIME"
+        app:layout_constraintBottom_toTopOf="@+id/nextToConfirmation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/in_time" />
+        app:layout_constraintTop_toBottomOf="@+id/in_time"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/in_date"
@@ -30,24 +31,27 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/dateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/in_date"
-        android:layout_marginTop="16dp"
         android:layout_toEndOf="@+id/in_date"
         android:layout_toRightOf="@+id/in_date"
         android:onClick="onClick"
         android:text="SELECT DATE"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/in_date" />
+        app:layout_constraintTop_toBottomOf="@+id/in_date"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/in_time"
@@ -57,15 +61,18 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="71dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateButton" />
+        app:layout_constraintTop_toBottomOf="@+id/dateButton"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="326dp"
         android:layout_height="69dp"
-        android:text="Hide this from FutureMe until..."
+        android:text="Lock the capsule from FutureMe until..."
         android:textAlignment="center"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -82,7 +89,8 @@
         android:layout_height="48dp"
         android:layout_marginTop="116dp"
         android:layout_marginBottom="96dp"
-        android:text="Let's double check..."
+        android:textAllCaps="false"
+        android:text="All set!"
         android:onClick="next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
