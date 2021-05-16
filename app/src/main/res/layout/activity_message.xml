@@ -45,6 +45,7 @@
         android:layout_height="48dp"
         android:layout_marginBottom="96dp"
         android:onClick="next"
+        android:textAllCaps="false"
         android:text="Tag the message in!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
