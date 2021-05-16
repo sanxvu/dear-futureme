@@ -25,6 +25,9 @@ public class VideoActivity extends AppCompatActivity {
     StorageReference storageReference;
     String videoURL;
 
+    String userEmail = "";
+    Uri videoUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +37,7 @@ public class VideoActivity extends AppCompatActivity {
         if(bundle!= null){
             videoURL = bundle.getString("VIDEO_URI");
             Log.i("TAG", "RECEIVED INFO: " + videoURL);
-            Uri videoUri = Uri.parse(videoURL);
+            videoUri = Uri.parse(videoURL);
 
             VideoView videoView = findViewById(R.id.videoView);
 
@@ -53,11 +56,16 @@ public class VideoActivity extends AppCompatActivity {
             storageReference = storage.getReference();
 
             GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-            String userEmail = "";
+
             if(acct != null){
                 userEmail = acct.getEmail();
             }
 
+        }
+    }
+
+    public void next(View view) {
+        if (view.getId() == R.id.nextToMessage) {
             // Directory name in firebase is the user's email
             StorageReference childRef = storageReference.child(userEmail+"/"+videoUri.getLastPathSegment());
             UploadTask uploadTask = childRef.putFile(videoUri);
@@ -72,19 +80,6 @@ public class VideoActivity extends AppCompatActivity {
                 }
             });
 
-            // TO PUT IN MESSAGES. RN JUST DUMMY MESSAGES. map key = video number, val = message
-//            Map<String, Object> videoToMessage = new HashMap<>();
-//            videoToMessage.put(videoUri.getLastPathSegment(), "test test abcdefg");
-//
-//            FirebaseDatabase database = FirebaseDatabase.getInstance();
-//            DatabaseReference ref = database.getReference("messages");
-//
-//            ref.updateChildren(videoToMessage);
-        }
-    }
-
-    public void next(View view) {
-        if (view.getId() == R.id.nextToMessage) {
             Intent call = new Intent(this, MessageActivity.class);
             call.putExtra("VIDEO_URI", videoURL);
             startActivity(call);
