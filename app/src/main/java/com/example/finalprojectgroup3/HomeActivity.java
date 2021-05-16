@@ -52,18 +52,20 @@ public class HomeActivity extends AppCompatActivity {
             userVideosURI = (ArrayList<Uri>) getIntent().getSerializableExtra("userVideosURI");
 
             if (!isNewUser) { // Not a new user
-                if (isCorrectTime && userVideosURI != null) {
-                    Log.i("HomeActivity", "VIDEOS ADDED, CORRECT TIME");
-                    unearthButton.setEnabled(true);
-                    changeTimeButton.setEnabled(true);
-                    unearth_hidden_text.setText("It's time to unearth your memories!\nBury more videos or update your date & time.");
-                    unearth_hidden_text.setVisibility(View.VISIBLE);
-                } else if (userVideosURI == null) { // Did not add videos yet
-                    Log.i("HomeActivity", "NO ADDED VIDEOS");
-                    unearthButton.setEnabled(false);
-                    changeTimeButton.setEnabled(false);
-                    unearth_hidden_text.setText("EMPTY: Bury your videos into the capsule!");
-                    unearth_hidden_text.setVisibility(View.VISIBLE);
+                if (isCorrectTime) {
+                    if (userVideosURI != null || userVideosURI.size() != 0) {  // correct time and has videos to show
+                        Log.i("HomeActivity", "VIDEOS ADDED, CORRECT TIME");
+                        unearthButton.setEnabled(true);
+                        changeTimeButton.setEnabled(true);
+                        unearth_hidden_text.setText("It's time to unearth your memories!\nBury more videos or update your date & time.");
+                        unearth_hidden_text.setVisibility(View.VISIBLE);
+                    } else {
+                        Log.i("HomeActivity", "NO ADDED VIDEOS");
+                        unearthButton.setEnabled(false);
+                        changeTimeButton.setEnabled(false);
+                        unearth_hidden_text.setText("EMPTY: Bury your videos into the capsule!");
+                        unearth_hidden_text.setVisibility(View.VISIBLE);
+                    } 
                 } else { // Added videos but not the correct time
                     Log.i("HomeActivity", "VIDEOS ADDED, NOT CORRECT TIME");
                     String userSelectedTime = bundle.getString("userSelectedTime");
