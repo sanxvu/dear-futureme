@@ -1,7 +1,7 @@
 # Dear FutureMe 🎦 
 Your own personal video time capsule. 
 
-### Created by San Vu, Catherin Kuntoro, Caitlyn Chau 
+### Created by San Vu, Catherine Kuntoro, Caitlyn Chau 
 
 📱 CS175 Mobile Device Devlopment Final Project 
 
