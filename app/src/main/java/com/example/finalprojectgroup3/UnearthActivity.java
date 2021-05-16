@@ -43,7 +43,6 @@ public class UnearthActivity extends AppCompatActivity {
     Button homeButton;
 //    Button nextVideo_button;
 //    Button prevVideo_button;
-    Button message_button;
 
     TextView noVideo_text; // In case the user has no videos
 
@@ -63,7 +62,6 @@ public class UnearthActivity extends AppCompatActivity {
         noVideo_text = findViewById(R.id.noVideo_textView);
 
         homeButton = findViewById(R.id.unearth_home_button);
-        message_button = findViewById(R.id.readMessage);
 //        nextVideo_button = findViewById(R.id.unearth_nextButton);
 //        prevVideo_button = findViewById(R.id.unearth_backButton);
         //prevVideo_button.setEnabled(false);
