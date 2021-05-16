@@ -80,15 +80,15 @@ public class HomeActivity extends AppCompatActivity {
                 if(isCorrectTime){
                     Log.i("HomeActivity", " Hit correct time");
                     unearthButton.setEnabled(true);
-                    unearth_hidden_text.setVisibility(View.INVISIBLE);
-
+                    unearth_hidden_text.setText("It's time to unearth your memories!\nAdd more videos or update your date & time.");
+                    unearth_hidden_text.setVisibility(View.VISIBLE);
                 } else { // Not the correct time
                     Log.i("HomeActivity", " Hit Not correct time");
 
-                    String userSelectedTime = bundle.getString("userSelectedTime"); // <<<<<<
-
+                    String userSelectedTime = bundle.getString("userSelectedTime");
+                    String[] datetime = userSelectedTime.split(", ");
                     unearthButton.setEnabled(false);
-                    unearth_hidden_text.setText("Not the correct time to unearth!");
+                    unearth_hidden_text.setText("Come back on " + datetime[0] + " at " + datetime[1] + "!");
                     unearth_hidden_text.setVisibility(View.VISIBLE);
                 }
 
