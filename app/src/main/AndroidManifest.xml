@@ -29,14 +29,30 @@
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
 
-        <activity android:name=".FinishActivity" />
-        <activity android:name=".VideoActivity" />
-        <activity android:name=".MessageActivity" />
-        <activity android:name=".DateActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".LoadingActivity"/>
-        <activity android:name=".UnearthActivity" />
-        <activity android:name=".StartActivity">
+        <activity
+            android:name=".FinishActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoadingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UnearthActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StartActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
