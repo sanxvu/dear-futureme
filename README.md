@@ -31,12 +31,15 @@ If it is time to unearth the videos and messages, the user can do so by clicking
 
 ### Frequently Asked Questions
 Q: Why can’t I sign in with my non-SJSU email?
+
 A: Due to constraints with our Google Firebase project, we have to limit sign-ins to users within our organization (SJSU) unless we submit our app for Google to review.
 
 Q: What if I want to view my videos sooner?
+
 A: If you would like to view your videos sooner, you can click on the “Change Time” button on the home screen to change to an earlier date and time. 
 
 Q: Can I remove videos from my time capsule?
+
 A: Unfortunately, you cannot remove videos from the time capsule. Just like a physical time capsule, once a relic has been buried, you will not be able to unearth it. However, you may keep burying more videos into the time capsule!
 
 ### Links
