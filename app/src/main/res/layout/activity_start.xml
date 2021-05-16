@@ -7,12 +7,20 @@
     android:background="@drawable/nudebg"
     tools:context=".StartActivity">
 
+    <VideoView
+        android:id="@+id/start_videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="221dp"
         android:layout_height="50dp"
         android:text="Your own personal video time capsule."
         android:textAlignment="center"
+        android:textColor="@color/nude"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,6 +36,7 @@
         android:layout_height="117dp"
         android:text="Bury as many videos and lock it inside a time capsule. Set a date to unlock it in the future... \n\nSJSU EMAIL ONLY"
         android:textAlignment="center"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
