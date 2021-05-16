@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bury"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.465" />
 
     <Button
         android:id="@+id/unearth"
@@ -66,12 +66,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Bury a video before unearthing it!"
+        android:textAlignment="center"
+        android:textSize="18sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/unearth"
-        app:layout_constraintVertical_bias="0.003" />
+        app:layout_constraintVertical_bias="0.013" />
 
     <Button
         android:id="@+id/signout"
@@ -100,18 +103,17 @@
 
     <Button
         android:id="@+id/changeTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="247dp"
+        android:layout_height="48dp"
         android:layout_marginTop="28dp"
         android:onClick="changeTime"
         android:text="change time"
-        android:textSize="10dp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/unearth_hidden_textView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.326" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
