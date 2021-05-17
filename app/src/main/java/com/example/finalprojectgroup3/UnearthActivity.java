@@ -52,7 +52,8 @@ public class UnearthActivity extends AppCompatActivity {
 
         if(userVideosURI.size() == 1) { // Only 1 video to show, no next button
             nextVideo_button.setEnabled(false);
-        }
+        } else
+            nextVideo_button.setEnabled(true);
 
         controller = new MediaController(this);
         controller.setAnchorView(videoView);
