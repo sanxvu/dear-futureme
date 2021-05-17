@@ -44,7 +44,7 @@ Q: Can I remove videos from my time capsule?
 A: Unfortunately, you cannot remove videos from the time capsule. Just like a physical time capsule, once a relic has been buried, you will not be able to unearth it. However, you may keep burying more videos into the time capsule!
 
 ### Links
-[Backlog](https://docs.google.com/spreadsheets/d/14QSBeHhoq-kCaNUsZroGfzXufmJal-hgEQhRGciO-ug/edit#gid=0)
-[APK](https://drive.google.com/file/d/1z_nqSZSdzO2d5wXpqtiwbmBjVS6SeC15/view?usp=sharing)
+* [Backlog](https://docs.google.com/spreadsheets/d/14QSBeHhoq-kCaNUsZroGfzXufmJal-hgEQhRGciO-ug/edit#gid=0)
+* [APK](https://drive.google.com/file/d/1z_nqSZSdzO2d5wXpqtiwbmBjVS6SeC15/view?usp=sharing)
 
 Add video link here? If u want
