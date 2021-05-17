@@ -1,5 +1,6 @@
 # Dear FutureMe 🎦 
-Your own personal video time capsule. 
+
+Your own personal video time capsule!
 
 ### Created by San Vu, Catherine Kuntoro, Caitlyn Chau 
 
