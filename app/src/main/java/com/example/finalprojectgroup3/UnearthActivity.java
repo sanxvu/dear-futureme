@@ -1,13 +1,22 @@
 package com.example.finalprojectgroup3;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.Display;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -31,11 +40,9 @@ public class UnearthActivity extends AppCompatActivity {
 
     VideoView videoView;
     MediaController controller;
-    HorizontalScrollView horizontalScrollView;
     Button homeButton;
-
-    TextView noVideo_text; // In case the user has no videos
-    Button noVideo_Button;
+    Button nextVideo_button;
+    Button prevVideo_button;
 
     ArrayList<Uri> userVideosURI;
     int counter = 0;
@@ -48,86 +55,88 @@ public class UnearthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unearth);
 
-
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        noVideo_text = findViewById(R.id.noVideo_textView);
-        noVideo_Button = findViewById(R.id.noVideo_button);
-
         homeButton = findViewById(R.id.unearth_home_button);
-        videoView = findViewById(R.id.unearth_videoView);
+        nextVideo_button = findViewById(R.id.unearth_next);
+        prevVideo_button = findViewById(R.id.unearth_prev);
+        prevVideo_button.setEnabled(false);
 
+        videoView = findViewById(R.id.unearth_videoView);
         userVideosURI = (ArrayList<Uri>) getIntent().getSerializableExtra("arrList");
 
-        if(userVideosURI.size() == 0){ // NO VIDEO TO DISPLAY!!!!! PROMPT USER TO GO BACK
-            videoView.setVisibility(View.INVISIBLE); // don't show the video view
-
-            noVideo_text.setVisibility(View.VISIBLE); // show the go back buttons and text
-            noVideo_Button.setVisibility(View.VISIBLE);
-
-        } else { // At least 1 video to display
-
-            horizontalScrollView = findViewById(R.id.unearth_scroll);
-            horizontalScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    if(scrollX > oldScrollX){
-                        counter++;
-                    } else if(scrollX < oldScrollX){
-                        counter--;
-                    }
-                    displayVideo(counter);
-                }
-            });
-
-
-            controller = new MediaController(this);
-            controller.setAnchorView(videoView);
-            controller.setMediaPlayer(videoView);
-            videoView.setMediaController(controller);
-
-            displayVideo(0);
-
-            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-            userEmail = "";
-            if(acct != null){
-                userEmail = acct.getEmail();
-            }
+        if(userVideosURI.size() == 1) { // Only 1 video to show, no next button
+            nextVideo_button.setEnabled(false);
         }
 
+        controller = new MediaController(this);
+        controller.setAnchorView(videoView);
+        controller.setMediaPlayer(videoView);
+        videoView.setMediaController(controller);
+
+        displayVideo(counter);
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        userEmail = "";
+        if (acct != null) {
+            userEmail = acct.getEmail();
+        }
     }
 
-    public void displayVideo(int currCounter){ // Display the video with URI at currCounter
+    public void nextVideo(View view){
+        counter++;
+        if(counter == userVideosURI.size() - 1){ // last video
+            nextVideo_button.setEnabled(false);
+        } else if(counter < userVideosURI.size() - 1){ // not the last video
+            nextVideo_button.setEnabled(true);
+        }
+        displayVideo(counter);
+        prevVideo_button.setEnabled(true);
+    }
+
+    public void prevVideo(View view){
+        counter--;
+        if(counter == 0){//first vid
+            prevVideo_button.setEnabled(false);
+        } else if(counter > 0){
+            prevVideo_button.setEnabled(true);
+        }
+        displayVideo(counter);
+        nextVideo_button.setEnabled(true);
+    }
+
+    public void displayVideo(int currCounter) { // Display the video with URI at currCounter
         videoView.setVideoURI(userVideosURI.get(currCounter));
-        videoView.setOnPreparedListener(mp ->{
+        videoView.setOnPreparedListener(mp -> {
             videoView.start();
         });
     }
 
-    public void onClickMessagePopup(View v){
-        String key = userVideosURI.get(counter).getLastPathSegment().substring(userEmail.length()+1);
+    public void onClickMessagePopup(View v) {
+        String key = userVideosURI.get(counter).getLastPathSegment().substring(userEmail.length() + 1);
 
         mDatabase.child("messages").child(key).get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Log.i("firebase", "GOT THE DATA: " + task.getResult().getValue().toString());
+            if (task.isSuccessful()) {
+                Log.i("firebase", "GOT THE DATA: " + task.getResult().getValue().toString());
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
-                    builder.setTitle("Dear Future Me...");
-                    builder.setMessage(task.getResult().getValue().toString());
-                    builder.setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+                builder.setTitle("Dear Future Me...");
+                builder.setMessage(task.getResult().getValue().toString());
+                builder.setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
 
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
 
     public void homeFromUnearth(View view) {
-        if (view.getId() == R.id.unearth_home_button || view.getId() == R.id.noVideo_button) {
+        if (view.getId() == R.id.unearth_home_button) {
             Intent call = new Intent(this, StartActivity.class);
             call.putExtra("isNewUser", false);
             startActivity(call);
         }
     }
+
+
 }

@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -33,6 +33,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     private SignInButton signInButton;
     private FirebaseAuth mAuth;
 
+    private VideoView start_videoView;
+
     boolean isNewUser;
     String userName;
 
@@ -40,6 +42,13 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        start_videoView = findViewById(R.id.start_videoView);
+        start_videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.starting_bg);
+        start_videoView.setOnPreparedListener(mp ->{
+            start_videoView.start();
+            mp.setLooping(true);
+        });
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -75,7 +84,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private void updateUI(@Nullable FirebaseUser account) {
         if (account != null) {
-            Toast.makeText(getApplicationContext(), "Signed in!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Signed in!", Toast.LENGTH_LONG).show();
             Log.d(TAG, "SIGNED IN!!");
 
             Intent call = new Intent(StartActivity.this, LoadingActivity.class);
@@ -83,7 +92,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             startActivity(call);
             // need to update this with a TextView or something
         } else {
-            Toast.makeText(getApplicationContext(), "Signed out!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Signed out!", Toast.LENGTH_LONG).show();
             Log.d(TAG, "SIGNED OUT!!");
         }
     }
