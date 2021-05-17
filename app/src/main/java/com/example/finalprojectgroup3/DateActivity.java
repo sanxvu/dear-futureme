@@ -49,11 +49,11 @@ public class DateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date);
 
-        btnDatePicker = (Button) findViewById(R.id.dateButton);
-        btnTimePicker = (Button) findViewById(R.id.timeButton);
-        txtDate = (EditText) findViewById(R.id.in_date);
-        txtTime = (EditText) findViewById(R.id.in_time);
-        back = (Button) findViewById(R.id.backToMessage);
+        btnDatePicker = findViewById(R.id.dateButton);
+        btnTimePicker = findViewById(R.id.timeButton);
+        txtDate = findViewById(R.id.in_date);
+        txtTime = findViewById(R.id.in_time);
+        back = findViewById(R.id.backToMessage);
 
         // don't show back button if user is just editing date/time
         Bundle bundle = getIntent().getExtras();
@@ -107,15 +107,11 @@ public class DateActivity extends AppCompatActivity {
             mMinute = c.get(Calendar.MINUTE);
             // Launch Time Picker Dialog
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.DateTimeDialogCustom,
-                    new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker view, int hourOfDay,
-                                              int minute) {
-                            txtTime.setText(hourOfDay + ":" + minute);
-                            mHour = hourOfDay;
-                            mMinute = minute;
-                            setTime = true;
-                        }
+                    (view, hourOfDay, minute) -> {
+                        txtTime.setText(hourOfDay + ":" + minute);
+                        mHour = hourOfDay;
+                        mMinute = minute;
+                        setTime = true;
                     }, mHour, mMinute, false);
             timePickerDialog.show();
         }

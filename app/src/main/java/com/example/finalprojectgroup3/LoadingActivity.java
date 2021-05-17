@@ -1,8 +1,5 @@
 package com.example.finalprojectgroup3;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
