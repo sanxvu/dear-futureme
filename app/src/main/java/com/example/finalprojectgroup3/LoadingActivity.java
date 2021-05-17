@@ -84,7 +84,6 @@ public class LoadingActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                //Do what you want
                 i++;
                 progressBar.setProgress(100);
             }
