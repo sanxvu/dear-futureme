@@ -46,4 +46,4 @@ A: Unfortunately, you cannot remove videos from the time capsule. Just like a ph
 ### Links
 * [Backlog](https://docs.google.com/spreadsheets/d/14QSBeHhoq-kCaNUsZroGfzXufmJal-hgEQhRGciO-ug/edit#gid=0)
 * [APK](https://drive.google.com/file/d/1z_nqSZSdzO2d5wXpqtiwbmBjVS6SeC15/view?usp=sharing)
-* Demo Video (https://drive.google.com/file/d/1tgOlyzRqVmpJluAGxepyqD73EAbvv8eB/view?usp=sharing)
+* [Demo Video](https://drive.google.com/file/d/1tgOlyzRqVmpJluAGxepyqD73EAbvv8eB/view?usp=sharing)
