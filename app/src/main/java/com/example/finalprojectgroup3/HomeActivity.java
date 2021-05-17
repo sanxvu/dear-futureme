@@ -24,17 +24,15 @@ public class HomeActivity extends AppCompatActivity {
     static final int REQUEST_VIDEO_CAPTURE = 1; // For recording
     static final int MEDIA_PICKER_SELECT = 2; // For uploading
 
-    ArrayList<Uri> userVideosURI = new ArrayList<>(); // has the URI of vids
-
+    // ITEMS THAT WILL BE RECEIVED FROM LOADING ACTIVITY
+    public ArrayList<Uri> userVideosURI = new ArrayList<>(); // has the URI of vids
     public static boolean isNewUser;
+    public Boolean isCorrectTime;
+    public String userSelectedTime;
 
     Button unearthButton; // clickable if correct time, unclickable if not correct time/new user
     TextView unearth_hidden_text; // Text view that appears when unearth button is unclickable
     Button changeTimeButton;
-
-    private static int mYear, mMonth, mDay, mHour, mMinute;
-    private static String[] MONTHS = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             isNewUser = bundle.getBoolean("isNewUser");
-            boolean isCorrectTime = bundle.getBooleanArray("isCorrectTime")[0];
+            isCorrectTime = bundle.getBoolean("isCorrectTime");
             userVideosURI = (ArrayList<Uri>) getIntent().getSerializableExtra("userVideosURI");
 
             if (!isNewUser) { // Not a new user
@@ -58,21 +56,25 @@ public class HomeActivity extends AppCompatActivity {
                         unearthButton.setEnabled(true);
                         changeTimeButton.setEnabled(true);
                         unearth_hidden_text.setText("It's time to unearth your memories!\nBury more videos or update your date & time.");
-                        unearth_hidden_text.setVisibility(View.VISIBLE);
-                    } else {
+                    } else { // No video to show
                         Log.i("HomeActivity", "NO ADDED VIDEOS");
                         unearthButton.setEnabled(false);
                         changeTimeButton.setEnabled(false);
                         unearth_hidden_text.setText("EMPTY: Bury your videos into the capsule!");
-                        unearth_hidden_text.setVisibility(View.VISIBLE);
-                    } 
+                    }
+                    unearth_hidden_text.setVisibility(View.VISIBLE);
                 } else { // Added videos but not the correct time
                     Log.i("HomeActivity", "VIDEOS ADDED, NOT CORRECT TIME");
-                    String userSelectedTime = bundle.getString("userSelectedTime");
-                    String[] datetime = userSelectedTime.split(", ");
                     unearthButton.setEnabled(false);
-                    changeTimeButton.setEnabled(true);
-                    unearth_hidden_text.setText("Come back on " + datetime[0] + " at " + datetime[1] + "!\n or change your date & time.");
+                    userSelectedTime = bundle.getString("userSelectedTime");
+                    if(userSelectedTime != null){
+                        String[] datetime = userSelectedTime.split(", ");
+                        changeTimeButton.setEnabled(true);
+                        unearth_hidden_text.setText("Come back on " + datetime[0] + " at " + datetime[1] + "!\n or change your date & time.");
+                    } else { // For some reason user did not set the time but closed the app
+                        changeTimeButton.setEnabled(true);
+                        unearth_hidden_text.setText("Please upload a video and set a time!");
+                    }
                     unearth_hidden_text.setVisibility(View.VISIBLE);
                 }
             } else { // New user, hide the unearth and change time button
@@ -153,18 +155,29 @@ public class HomeActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_VIDEO_CAPTURE) { // From recording a video
-                Intent intent = new Intent(HomeActivity.this, VideoActivity.class);
-                intent.putExtra("VIDEO_URI", data.getData().toString());
-                startActivity(intent);
+                Intent call = new Intent(HomeActivity.this, VideoActivity.class);
+                call.putExtra("VIDEO_URI", data.getData().toString());
+
+                call.putExtra("isNewUser", isNewUser);
+                call.putExtra("userVideosURI", userVideosURI);
+                call.putExtra("userSelectedTime", userSelectedTime);
+                call.putExtra("isCorrectTime", isCorrectTime);
+
+                startActivity(call);
             }
             if (requestCode == MEDIA_PICKER_SELECT) { // From selecting a video
                 Uri selectedMediaUri = data.getData();
                 if (selectedMediaUri.toString().contains("video")) {
 
-                    Intent intent = new Intent(HomeActivity.this, VideoActivity.class);
-                    intent.putExtra("VIDEO_URI", data.getData().toString());
+                    Intent call = new Intent(HomeActivity.this, VideoActivity.class);
+                    call.putExtra("VIDEO_URI", data.getData().toString());
 
-                    startActivity(intent);
+                    call.putExtra("isNewUser", isNewUser);
+                    call.putExtra("userVideosURI", userVideosURI);
+                    call.putExtra("userSelectedTime", userSelectedTime);
+                    call.putExtra("isCorrectTime", isCorrectTime);
+
+                    startActivity(call);
                 }
             }
         }
