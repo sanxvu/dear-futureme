@@ -79,7 +79,6 @@ public class DateActivity extends AppCompatActivity {
     // Show date and time picker when they click on the set date/set time
     public void onClick(View v) {
         if (v == btnDatePicker) {
-            setDate = true;
             // Get Current Date
             final Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);
@@ -96,12 +95,12 @@ public class DateActivity extends AppCompatActivity {
                             mYear = year;
                             mMonth = monthOfYear;
                             mDay = dayOfMonth;
+                            setDate = true;
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
         }
         if (v == btnTimePicker) {
-            setTime = true;
             // Get Current Time
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -115,6 +114,7 @@ public class DateActivity extends AppCompatActivity {
                             txtTime.setText(hourOfDay + ":" + minute);
                             mHour = hourOfDay;
                             mMinute = minute;
+                            setTime = true;
                         }
                     }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -182,6 +182,7 @@ public class DateActivity extends AppCompatActivity {
 
             // Message activity expects this
             call.putExtra("VIDEO_URI", bundle.getString("VIDEO_URI"));
+            call.putExtra("Message", message);
 
             startActivity(call);
         }

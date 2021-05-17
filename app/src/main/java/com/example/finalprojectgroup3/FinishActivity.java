@@ -119,19 +119,8 @@ public class FinishActivity extends AppCompatActivity {
     }
 
     public void home(View view) {
-        if (view.getId() == R.id.backToHome) {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent call = new Intent(view.getContext(), StartActivity.class);
-                    call.putExtra("isNewUser", false);
-                    startActivity(call);
-                }
-            }, 4000);
-
-
-        }
+        Intent call = new Intent(view.getContext(), StartActivity.class);
+        call.putExtra("isNewUser", false);
+        startActivity(call);
     }
-
 }

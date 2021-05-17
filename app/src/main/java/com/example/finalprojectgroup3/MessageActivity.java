@@ -24,6 +24,10 @@ public class MessageActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle!= null){
             videoURL = bundle.getString("VIDEO_URI");
+            String userMessage = bundle.getString("Message");
+            if(userMessage != null){
+                message.setText(userMessage);
+            }
         }
     }
 

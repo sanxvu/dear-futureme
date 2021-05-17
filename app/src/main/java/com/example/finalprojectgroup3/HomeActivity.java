@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
                         unearthButton.setEnabled(true);
                         changeTimeButton.setEnabled(true);
                         unearth_hidden_text.setText("It's time to unearth your memories!\nBury more videos or update your date & time.");
-                    } else {
+                    } else { // No video to show
                         Log.i("HomeActivity", "NO ADDED VIDEOS");
                         unearthButton.setEnabled(false);
                         changeTimeButton.setEnabled(false);
@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
                         changeTimeButton.setEnabled(true);
                         unearth_hidden_text.setText("Come back on " + datetime[0] + " at " + datetime[1] + "!\n or change your date & time.");
                     } else { // For some reason user did not set the time but closed the app
-                        changeTimeButton.setEnabled(false);
+                        changeTimeButton.setEnabled(true);
                         unearth_hidden_text.setText("Please upload a video and set a time!");
                     }
                     unearth_hidden_text.setVisibility(View.VISIBLE);
