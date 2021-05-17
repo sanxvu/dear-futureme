@@ -1,5 +1,6 @@
 package com.example.finalprojectgroup3;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,10 +14,15 @@ import android.widget.VideoView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class VideoActivity extends AppCompatActivity {
 
@@ -66,26 +72,29 @@ public class VideoActivity extends AppCompatActivity {
 
     public void next(View view) {
         if (view.getId() == R.id.nextToMessage) {
-            // Directory name in firebase is the user's email
-            StorageReference childRef = storageReference.child(userEmail+"/"+videoUri.getLastPathSegment());
-            UploadTask uploadTask = childRef.putFile(videoUri);
-
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.i("TAG", "SUCCESS UPLOAD TO FIREBASE");
-                }
-            });
-
-            Intent call = new Intent(this, MessageActivity.class);
-            call.putExtra("VIDEO_URI", videoURL);
-            startActivity(call);
+            intentTo(MessageActivity.class, true);
         }
     }
     public void back(View view) {
         if (view.getId() == R.id.backToHome) {
-            Intent call = new Intent(this, HomeActivity.class);
-            startActivity(call);
+            intentTo(HomeActivity.class, false);
         }
+    }
+
+    private void intentTo(Class<?> cls, boolean next){
+        Intent call = new Intent(this, cls);
+
+        Bundle bundle = getIntent().getExtras();
+
+        call.putExtra("isNewUser", bundle.getBoolean("isNewUser"));
+        call.putExtra("userVideosURI", (ArrayList<Uri>) getIntent().getSerializableExtra("userVideosURI"));
+        call.putExtra("userSelectedTime", bundle.getString("userSelectedTime"));
+        call.putExtra("isCorrectTime", bundle.getBoolean("isCorrectTime"));
+
+        if(next){
+            call.putExtra("VIDEO_URI", videoURL); // String version, need to parse
+        } // back button (to home activity) doesnt care abt video_uri
+
+        startActivity(call);
     }
 }

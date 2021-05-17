@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +40,9 @@ public class DateActivity extends AppCompatActivity {
     EditText txtDate;
     EditText txtTime;
 
+    String message; // from Bundle
+
     private static int mYear, mMonth, mDay, mHour, mMinute;
-    private static String[] MONTHS = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class DateActivity extends AppCompatActivity {
                 back.setVisibility(View.GONE);
             } else { //show back button
                 back.setVisibility(View.VISIBLE);
+                message = bundle.getString("Message");
             }
         }
 
@@ -156,6 +160,9 @@ public class DateActivity extends AppCompatActivity {
                     call.putExtra("isNewUser", false); // through editing way, not new user
                 } else {
                     call = new Intent(this, FinishActivity.class);
+                    call.putExtra("Message", message);
+                    Bundle bundle = getIntent().getExtras();
+                    call.putExtra("VIDEO_URI", bundle.getString("VIDEO_URI"));
                 }
                 startActivity(call);
             }
@@ -165,6 +172,17 @@ public class DateActivity extends AppCompatActivity {
     public void back(View view) {
         if (view.getId() == R.id.backToMessage) {
             Intent call = new Intent(this, MessageActivity.class);
+
+            Bundle bundle = getIntent().getExtras();
+
+            call.putExtra("isNewUser", bundle.getBoolean("isNewUser"));
+            call.putExtra("userVideosURI", (ArrayList<Uri>) getIntent().getSerializableExtra("userVideosURI"));
+            call.putExtra("userSelectedTime", bundle.getString("userSelectedTime"));
+            call.putExtra("isCorrectTime", bundle.getBoolean("isCorrectTime"));
+
+            // Message activity expects this
+            call.putExtra("VIDEO_URI", bundle.getString("VIDEO_URI"));
+
             startActivity(call);
         }
     }

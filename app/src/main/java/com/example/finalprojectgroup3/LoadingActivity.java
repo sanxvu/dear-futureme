@@ -39,7 +39,7 @@ public class LoadingActivity extends AppCompatActivity {
     String userTime;
 
     long timeDifference;
-    boolean[] value = new boolean[1];
+    boolean isCorrectTime;
     ArrayList<Uri> userVideosURI = new ArrayList<>();
 
     VideoView loading_videoView;
@@ -119,9 +119,7 @@ public class LoadingActivity extends AppCompatActivity {
                     call.putExtra("isNewUser", isNewUser);
                     call.putExtra("userVideosURI", userVideosURI);
                     call.putExtra("userSelectedTime", userTime);
-
-                    Log.i("isCorrectTime in start activity", String.valueOf(value[0]));
-                    call.putExtra("isCorrectTime", value);
+                    call.putExtra("isCorrectTime", isCorrectTime);
                     startActivity(call);
                 }
             }, delayTimeMilliseconds);
@@ -153,30 +151,35 @@ public class LoadingActivity extends AppCompatActivity {
 
     public void isCorrectTime() {
         if (isNewUser) {
-            value[0] = false;
+            isCorrectTime = false;
         } else {
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
             mDatabase.child("users_date").child(userName).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     SimpleDateFormat sdf = new SimpleDateFormat("MM.dd.yyyy, HH:mm", Locale.getDefault());
                     try {
-                        userTime = task.getResult().getValue().toString();
+                        if(task.getResult().getValue() != null){
+                            userTime = task.getResult().getValue().toString();
 
-                        Date userSetDateTime = sdf.parse(userTime);
+                            Date userSetDateTime = sdf.parse(userTime);
 
-                        Log.i("user set time", task.getResult().getValue().toString());
+                            Log.i("user set time", task.getResult().getValue().toString());
 
-                        //timeDifference = userSetDateTime.getTime() - System.currentTimeMillis();
+                            timeDifference = TimeUnit.SECONDS.convert(userSetDateTime.getTime() - System.currentTimeMillis(),
+                                    TimeUnit.SECONDS);
+                            Log.i("difference value in try catch", String.valueOf(timeDifference));
+                            Log.i("difference in the try catch", String.valueOf(timeDifference <= 0));
 
-                        timeDifference = TimeUnit.SECONDS.convert(userSetDateTime.getTime() - System.currentTimeMillis(),
-                                TimeUnit.SECONDS);
-                        Log.i("difference value in try catch", String.valueOf(timeDifference));
-                        Log.i("difference in the try catch", String.valueOf(timeDifference <= 0));
-
-                        value[0] = timeDifference <= 0;
+                            isCorrectTime = timeDifference <= 0;
+                        } else {
+                            isCorrectTime = false;
+                        }
                     } catch (ParseException e) {
                         e.printStackTrace();
+                        isCorrectTime = false;
                     }
+                } else {
+                    isCorrectTime = false;
                 }
             });
         }

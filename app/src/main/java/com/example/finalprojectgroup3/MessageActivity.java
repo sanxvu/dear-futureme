@@ -1,63 +1,67 @@
 package com.example.finalprojectgroup3;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class MessageActivity extends AppCompatActivity {
 
-    private static EditText message;
-    private static Uri videoUri;
+    private EditText message;
+    String videoURL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        message = (EditText) findViewById(R.id.messageText);
+        message = findViewById(R.id.messageText);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!= null){
-            String videoURL = bundle.getString("VIDEO_URI");
-            videoUri = Uri.parse(videoURL);
+            videoURL = bundle.getString("VIDEO_URI");
         }
     }
 
     public void next(View view) {
         if (view.getId() == R.id.nextToDate) {
-            Map<String, Object> videoToMessage = new HashMap<>();
-            videoToMessage.put(videoUri.getLastPathSegment(), message.getText().toString());
-
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference ref = database.getReference("messages");
-
-            ref.updateChildren(videoToMessage);
-
             if(HomeActivity.isNewUser){
-                Intent call = new Intent(this,DateActivity.class);
-                call.putExtra("editing", false);
-                startActivity(call);
+                intentTo(DateActivity.class, true);
             } else { // Not a new user
-                Intent call = new Intent(this, FinishActivity.class);
-                startActivity(call);
+                intentTo(FinishActivity.class, true);
             }
         }
     }
 
     public void back(View view) {
         if (view.getId() == R.id.backToVideo) {
-            Intent call = new Intent(this,VideoActivity.class);
-            startActivity(call);
+            intentTo(VideoActivity.class, false);
         }
+    }
+
+    private void intentTo(Class<?> cls, boolean next){
+        Intent call = new Intent(this, cls);
+
+        Bundle bundle = getIntent().getExtras();
+
+        call.putExtra("isNewUser", bundle.getBoolean("isNewUser"));
+        call.putExtra("userVideosURI", (ArrayList<Uri>) getIntent().getSerializableExtra("userVideosURI"));
+        call.putExtra("userSelectedTime", bundle.getString("userSelectedTime"));
+        call.putExtra("isCorrectTime", bundle.getBoolean("isCorrectTime"));
+
+        call.putExtra("VIDEO_URI", videoURL);
+
+        if(next){
+            // String version, need to parse
+            if(HomeActivity.isNewUser){
+                call.putExtra("editing", false);
+            }
+            call.putExtra("Message", message.getText().toString()); // next activity cares abt message
+        }
+        startActivity(call);
     }
 }
