@@ -47,7 +47,7 @@ public class LoadingActivity extends AppCompatActivity {
     CountDownTimer mCountDownTimer;
     int i = 0;
 
-    int delayTimeMilliseconds = 3500;
+    int delayTimeMilliseconds = 5000;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +66,7 @@ public class LoadingActivity extends AppCompatActivity {
         // animate progressbar for about 3 seconds
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setProgress(i);
-        mCountDownTimer = new CountDownTimer(3000, 1000) {
+        mCountDownTimer = new CountDownTimer(4000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.v("Log_tag", "Tick of Progress" + i + millisUntilFinished);
@@ -76,7 +76,7 @@ public class LoadingActivity extends AppCompatActivity {
                 } else if (i==3){
                     progress_textView.setText("Almost there...");
                 }
-                progressBar.setProgress((int) i * 100 / (3000/ 1000));
+                progressBar.setProgress((int) i * 100 / (4000/ 1000));
             }
 
             @Override
